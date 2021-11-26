@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Masrapt</string>
     <string name="title_activity_dashboard">Dashboard_activity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Map</string>
+    <string name="title_dashboard">My Location</string>
+    <string name="title_notifications">Routes</string>
     <string name="intro_text">Never miss the bus whit us</string>
 </resources>
