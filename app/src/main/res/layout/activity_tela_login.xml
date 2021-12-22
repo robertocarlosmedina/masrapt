@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ligth_background"
+    tools:context=".TelaLogin">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/bus1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="100dp"
+        />
+    <TextView
+        android:id="@+id/logo_title"
+        style="@style/logo_title"
+        android:text="Masrapt"
+        android:gravity="center_horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo"
+        />
+    <View
+        android:id="@+id/container_componentes"
+        style="@style/containerComponentes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo_title"
+        />
+    <EditText
+        android:id="@+id/user"
+        style="@style/Edit_text"
+        android:maxLength="25"
+        android:drawableLeft="@drawable/ic_user"
+        android:hint="  Username"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@id/container_componentes"
+        app:layout_constraintEnd_toEndOf="@id/container_componentes"
+        app:layout_constraintTop_toTopOf="@id/container_componentes"
+        />
+    <EditText
+        android:id="@+id/password"
+        style="@style/Edit_text"
+        android:maxLength="25"
+        android:inputType="textPassword"
+        android:drawableLeft="@drawable/ic_senha"
+        android:hint="  Password"
+        app:layout_constraintStart_toStartOf="@id/container_componentes"
+        app:layout_constraintEnd_toEndOf="@id/container_componentes"
+        app:layout_constraintTop_toBottomOf="@id/user"
+        />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_login"
+        style="@style/Buttom"
+        android:text="@string/login"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/password"
+        />
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/container_componentes"
+        android:layout_marginTop="10dp"
+        android:visibility="invisible"
+        />
+    <TextView
+        android:id="@+id/signUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/signUp"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@color/blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progress_bar"
+        android:layout_marginTop="10dp"
+        />
+    <TextView
+        android:id="@+id/F_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/password"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textColor="@color/blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/signUp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="30dp"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
