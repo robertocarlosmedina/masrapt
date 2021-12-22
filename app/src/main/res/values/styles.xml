@@ -3,7 +3,7 @@
     <style name="containerComponentes">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">250dp</item>
-        <item name="background">@drawable/container_componetes</item>
+        <item name="android:background">@drawable/container_componetes</item>
         <item name="android:layout_margin">20dp</item>
     </style>
     <style name="containerMenu">
@@ -48,7 +48,7 @@
         <item name="android:textAllCaps">false</item>
     </style>
     <style name="HeaderTitle">
-        <item name="android:gravity">left</item>
+        
         <item name="android:textSize">25dp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/black</item>

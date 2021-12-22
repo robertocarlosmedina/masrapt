@@ -5,13 +5,16 @@
       <map>
         <entry key="..\:/Github/masrapt/app/src/main/res/drawable/background_border.xml" value="0.403125" />
         <entry key="..\:/Github/masrapt/app/src/main/res/drawable/btn_google_facebook.xml" value="0.403125" />
+        <entry key="..\:/Github/masrapt/app/src/main/res/drawable/btn_whats_discord.xml" value="0.403125" />
         <entry key="..\:/Github/masrapt/app/src/main/res/drawable/buttom.xml" value="0.403125" />
         <entry key="..\:/Github/masrapt/app/src/main/res/drawable/container_componentes_menu.xml" value="0.403125" />
         <entry key="..\:/Github/masrapt/app/src/main/res/drawable/container_componetes.xml" value="0.403125" />
         <entry key="..\:/Github/masrapt/app/src/main/res/drawable/edit_text.xml" value="0.403125" />
+        <entry key="..\:/Github/masrapt/app/src/main/res/drawable/ic_baseline_person_pin_24.xml" value="0.403125" />
         <entry key="..\:/Github/masrapt/app/src/main/res/drawable/ic_lock.xml" value="0.403125" />
         <entry key="..\:/Github/masrapt/app/src/main/res/drawable/ligth_background.xml" value="0.403125" />
         <entry key="..\:/Github/masrapt/app/src/main/res/drawable/shadow.xml" value="0.403125" />
+        <entry key="..\:/Github/masrapt/app/src/main/res/layout/activity_about.xml" value="0.33" />
         <entry key="..\:/Github/masrapt/app/src/main/res/layout/activity_change_password.xml" value="0.38697916666666665" />
         <entry key="..\:/Github/masrapt/app/src/main/res/layout/activity_dashboard.xml" value="0.28306159420289856" />
         <entry key="..\:/Github/masrapt/app/src/main/res/layout/activity_main.xml" value="0.28306159420289856" />

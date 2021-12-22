@@ -38,6 +38,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/logo_title"
+
         />
     <EditText
         android:id="@+id/user"
@@ -49,6 +50,7 @@
         app:layout_constraintStart_toStartOf="@id/container_componentes"
         app:layout_constraintEnd_toEndOf="@id/container_componentes"
         app:layout_constraintTop_toTopOf="@id/container_componentes"
+
         />
     <EditText
         android:id="@+id/password"
