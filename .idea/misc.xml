@@ -29,8 +29,10 @@
         <entry key="..\:/Github/masrapt/app/src/main/res/mipmap-anydpi-v26/ic_logo.xml" value="0.23489583333333333" />
         <entry key="app/src/main/res/drawable/background_border.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/border.xml" value="0.209375" />
+        <entry key="app/src/main/res/layout/activity_about.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_tela_login.xml" value="0.25" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.151268115942029" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />

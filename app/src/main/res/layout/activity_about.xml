@@ -181,7 +181,7 @@
         android:id="@+id/whats"
         android:layout_width="15dp"
         android:layout_height="15dp"
-        android:src="@drawable/WhatsApp"
+        android:src="@drawable/whatsapp"
         app:layout_constraintStart_toStartOf="@id/bt_whats"
         app:layout_constraintEnd_toEndOf="@id/bt_whats"
         app:layout_constraintTop_toTopOf="@id/bt_whats"
