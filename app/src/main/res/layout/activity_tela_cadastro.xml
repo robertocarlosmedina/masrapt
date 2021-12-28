@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
+<androidx.core.widget.NestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
     xmlns:android="http://schemas.android.com/apk/res/android" >
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ligth_background"
     tools:context=".TelaCadastro">
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:textSize="30dp"
         android:src="@drawable/bus1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,49 +23,55 @@
         />
     <TextView
         android:id="@+id/logo_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         style="@style/logo_title"
         android:text="Masrapt"
         android:gravity="center_horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logo"
-        />
+        app:layout_constraintTop_toBottomOf="@id/logo" />
+
     <View
         android:id="@+id/container_componentes"
         style="@style/containerComponentes"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logo_title"
-        />
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo_title" />
+
     <EditText
         android:id="@+id/user"
         style="@style/Edit_text"
         android:maxLength="25"
         android:drawableLeft="@drawable/ic_user"
-        android:hint="  Username"
+        android:hint="Username"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="@id/container_componentes"
         app:layout_constraintEnd_toEndOf="@id/container_componentes"
         app:layout_constraintTop_toTopOf="@id/container_componentes"
         />
+
     <EditText
         android:id="@+id/email"
         style="@style/Edit_text"
-        android:maxLength="25"
         android:drawableLeft="@drawable/ic_email"
-        android:hint="  Email"
+        android:hint="Email"
         android:inputType="textEmailAddress"
-        app:layout_constraintStart_toStartOf="@id/container_componentes"
+        android:maxLength="25"
         app:layout_constraintEnd_toEndOf="@id/container_componentes"
-        app:layout_constraintTop_toBottomOf="@id/user"
-        />
+        app:layout_constraintHorizontal_bias="0.725"
+        app:layout_constraintStart_toStartOf="@id/container_componentes"
+        app:layout_constraintTop_toBottomOf="@id/user" />
+
     <EditText
         android:id="@+id/password"
         style="@style/Edit_text"
         android:maxLength="25"
         android:inputType="textPassword"
         android:drawableLeft="@drawable/ic_senha"
-        android:hint="  Password"
+        android:hint="Password"
         app:layout_constraintStart_toStartOf="@id/container_componentes"
         app:layout_constraintEnd_toEndOf="@id/container_componentes"
         app:layout_constraintTop_toBottomOf="@id/email"
@@ -93,43 +99,45 @@
         />
     <View
         android:id="@+id/bt_google"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="@id/bt_facebook"
         app:layout_constraintTop_toBottomOf="@id/or"
         android:background="@drawable/btn_google_facebook"
         />
+
     <View
         android:id="@+id/bt_facebook"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        app:layout_constraintStart_toStartOf="@id/bt_google"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/or"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:background="@drawable/btn_google_facebook"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/bt_google"
+        app:layout_constraintTop_toBottomOf="@id/or"
 
         />
+
     <ImageView
         android:id="@+id/google"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:src="@drawable/google"
         app:layout_constraintStart_toStartOf="@id/bt_google"
         app:layout_constraintEnd_toEndOf="@id/bt_google"
         app:layout_constraintTop_toTopOf="@id/bt_google"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="8dp"
         />
+
     <ImageView
         android:id="@+id/facebook"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="27dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="8dp"
         android:src="@drawable/facebook"
-        app:layout_constraintStart_toStartOf="@id/bt_facebook"
         app:layout_constraintEnd_toEndOf="@id/bt_facebook"
-        app:layout_constraintTop_toTopOf="@id/bt_facebook"
-        android:layout_marginTop="10dp"
-        />
+        app:layout_constraintStart_toStartOf="@id/bt_facebook"
+        app:layout_constraintTop_toTopOf="@id/bt_facebook" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
