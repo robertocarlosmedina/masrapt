@@ -5,9 +5,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     xmlns:android="http://schemas.android.com/apk/res/android" >
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ligth_background"
@@ -17,31 +15,40 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="About"
+        android:textStyle="bold"
         style="@style/HeaderTitle"
-        android:layout_marginLeft="40dp"
-        app:layout_constraintStart_toStartOf="@id/back"
+        android:layout_marginLeft="@dimen/header_left_margin"
+        android:layout_marginTop="@dimen/header_top_margin"
+        android:textSize="@dimen/header_text_size"
         app:layout_constraintEnd_toEndOf="@id/back"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintStart_toStartOf="@id/back"
+        app:layout_constraintTop_toTopOf="parent" />
     <ImageView
         android:id="@+id/back"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/back_arrow_size"
+        android:layout_height="@dimen/back_arrow_size"
+        android:layout_marginLeft="@dimen/back_arrow_left_margin"
+        android:layout_marginTop="@dimen/back_arrow_top_margin"
         android:src="@drawable/ic_back"
-        app:layout_constraintStart_toStartOf="@id/about"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintHorizontal_bias="0.002"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <View
         android:id="@+id/inform"
         android:layout_width="match_parent"
         android:layout_height="150dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="20dp"
         android:background="@drawable/container_componentes_menu"
-        android:layout_margin="20dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:elevation="5dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/about"
-        />
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/about" />
+
     <View
         android:id="@+id/user_inform"
         android:layout_width="match_parent"
@@ -49,7 +56,8 @@
         android:background="@drawable/container_componentes_menu"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="120dp"
+        android:elevation="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/inform"
@@ -67,7 +75,9 @@
     <ImageView
         android:layout_width="200dp"
         android:layout_height="170dp"
+        android:layout_marginTop="30dp"
         android:src="@drawable/ic_persona"
+        android:elevation="6dp"
         app:layout_constraintStart_toStartOf="@id/user_inform"
         app:layout_constraintEnd_toEndOf="@id/user_inform"
         app:layout_constraintTop_toBottomOf="@id/inform"
@@ -101,102 +111,100 @@
         app:layout_constraintTop_toBottomOf="@id/txt_support"
 
         />
+
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="100dp"
+        android:elevation="6dp"
         android:src="@drawable/bus1"
-        app:layout_constraintStart_toStartOf="@id/inform"
         app:layout_constraintEnd_toEndOf="@id/masrapt"
-        app:layout_constraintTop_toTopOf="@id/inform"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="100dp"
-        />
-    <TextView
-        android:id="@+id/logo_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Masrapt"
-        android:textSize="15dp"
-        android:textStyle="normal"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@id/inform"
-        app:layout_constraintEnd_toEndOf="@id/masrapt"
-        app:layout_constraintTop_toBottomOf="@id/logo"
-        android:gravity="center"
-        android:layout_marginRight="100dp"
+        app:layout_constraintStart_toStartOf="@+id/inform"
+        app:layout_constraintTop_toTopOf="@id/inform" />
 
-        />
     <TextView
         android:id="@+id/masrapt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Masrapt"
-        android:textSize="40dp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@id/logo"
-        app:layout_constraintEnd_toEndOf="@id/inform"
-        app:layout_constraintTop_toTopOf="@id/inform"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
         android:layout_marginLeft="50dp"
+        android:layout_marginTop="16dp"
+        android:elevation="6dp"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/inform"
+        app:layout_constraintStart_toStartOf="@id/logo"
+        app:layout_constraintTop_toTopOf="@id/inform"
 
         />
+
     <TextView
         android:id="@+id/version"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="80dp"
         android:text="1.0.1"
+        android:elevation="6dp"
+        android:textColor="@color/black"
         android:textSize="20dp"
         android:textStyle="normal"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@id/masrapt"
         app:layout_constraintEnd_toEndOf="@id/masrapt"
-        app:layout_constraintTop_toBottomOf="@id/masrapt"
-        android:layout_marginRight="100dp"
-        />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/masrapt"
+        app:layout_constraintTop_toBottomOf="@id/masrapt" />
+
     <View
         android:id="@+id/bt_whats"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/version"
+        android:layout_marginTop="12dp"
         android:background="@drawable/btn_whats_discord"
-        android:layout_marginLeft="20dp"
-        />
+        android:elevation="6dp"
+        app:layout_constraintEnd_toEndOf="@+id/inform"
+        app:layout_constraintHorizontal_bias="0.527"
+        app:layout_constraintStart_toStartOf="@+id/inform"
+        app:layout_constraintTop_toBottomOf="@id/version" />
+
     <View
         android:id="@+id/bt_discord"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        app:layout_constraintStart_toStartOf="@id/bt_whats"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/version"
+        android:layout_marginTop="12dp"
         android:background="@drawable/btn_whats_discord"
-        android:layout_marginRight="90dp"
 
-        />
+        android:elevation="6dp"
+        app:layout_constraintEnd_toEndOf="@+id/inform"
+        app:layout_constraintHorizontal_bias="0.135"
+        app:layout_constraintStart_toEndOf="@+id/bt_whats"
+        app:layout_constraintTop_toBottomOf="@id/version" />
+
     <ImageView
         android:id="@+id/whats"
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:src="@drawable/whatsapp"
+        android:elevation="6dp"
         app:layout_constraintStart_toStartOf="@id/bt_whats"
         app:layout_constraintEnd_toEndOf="@id/bt_whats"
         app:layout_constraintTop_toTopOf="@id/bt_whats"
         android:layout_marginTop="7dp"
         />
+
     <ImageView
         android:id="@+id/discord"
         android:layout_width="15dp"
         android:layout_height="15dp"
-        android:src="@drawable/discord"
-        app:layout_constraintStart_toStartOf="@id/bt_discord"
-        app:layout_constraintEnd_toEndOf="@id/bt_discord"
-        app:layout_constraintTop_toTopOf="@id/bt_discord"
         android:layout_marginTop="7dp"
-        />
+        android:elevation="6dp"
+        android:src="@drawable/discord"
+        app:layout_constraintEnd_toEndOf="@id/bt_discord"
+        app:layout_constraintStart_toStartOf="@id/bt_discord"
+        app:layout_constraintTop_toTopOf="@id/bt_discord" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

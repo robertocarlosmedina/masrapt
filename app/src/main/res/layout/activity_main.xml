@@ -7,41 +7,43 @@
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/app_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="276dp"
+        android:layout_marginTop="228dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/bus1" />
+        app:srcCompat="@drawable/bus1"
+        tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/textView5"
-        android:layout_width="153dp"
-        android:layout_height="54dp"
-        android:text="@string/app_name"
-        android:textAlignment="center"
+        android:id="@+id/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Masrapt"
+        app:layout_constraintHorizontal_bias="0.498"
+        android:textSize="30dp"
         android:textStyle="bold"
-        android:textSize="@dimen/tittle_size"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.57" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_icon" />
 
     <TextView
-        android:id="@+id/textView6"
-        android:layout_width="245dp"
-        android:layout_height="41dp"
-        android:text="@string/intro_text"
+        android:id="@+id/main_phrase"
+        android:layout_width="185dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/main_phrase"
+        android:textSize="20dp"
         android:textAlignment="center"
-        android:textSize="@dimen/intro_size"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.663" />
+        app:layout_constraintTop_toBottomOf="@+id/app_name"
+        tools:ignore="MissingConstraints" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
