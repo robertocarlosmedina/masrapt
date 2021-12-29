@@ -15,5 +15,7 @@
     <string name="changer_password">Change Password</string>
     <string name="delete_account">Delete Account</string>
     <string name="main_phrase">Never miss the bus with us</string>
+    <string name="average_waiting_time">45 mn</string>
+    <string name="nr_bus_active">4 active</string>
 
 </resources>

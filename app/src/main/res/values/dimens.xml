@@ -17,4 +17,7 @@
     <dimen name="menu_header_spacing">28dp</dimen>
     <dimen name="menu_element_font_size">16dp</dimen>
     <dimen name="menu_elem_left_margin">20dp</dimen>
+    <dimen name="routes_place_font_size">16dp</dimen>
+    <dimen name="route_name_font_size">20dp</dimen>
+    <dimen name="route_ico_space">8dp</dimen>
 </resources>
