@@ -12,4 +12,9 @@
     <dimen name="back_arrow_top_margin">12dp</dimen>
     <dimen name="back_arrow_left_margin">10dp</dimen>
     <dimen name="header_top_margin">10dp</dimen>
+    <dimen name="menu_title_font_size">12dp</dimen>
+    <dimen name="menu_header_left_margin">20dp</dimen>
+    <dimen name="menu_header_spacing">28dp</dimen>
+    <dimen name="menu_element_font_size">16dp</dimen>
+    <dimen name="menu_elem_left_margin">20dp</dimen>
 </resources>

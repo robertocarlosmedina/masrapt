@@ -10,8 +10,8 @@
     <string name="password">Forget Password</string>
     <string name="registe">Registe</string>
     <string name="save">Save</string>
-    <string name="account">Account</string>
-    <string name="themes">Themes</string>
+    <string name="account">ACCOUNT</string>
+    <string name="themes">THEMES</string>
     <string name="changer_password">Change Password</string>
     <string name="delete_account">Delete Account</string>
     <string name="main_phrase">Never miss the bus with us</string>
