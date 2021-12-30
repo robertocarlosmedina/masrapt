@@ -17,5 +17,9 @@
     <string name="main_phrase">Never miss the bus with us</string>
     <string name="average_waiting_time">45 mn</string>
     <string name="nr_bus_active">4 active</string>
+    <string name="user_name">Roberto Carlos</string>
+    <string name="user_mail">rmedina@uta.cv</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 
 </resources>

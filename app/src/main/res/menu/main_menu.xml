@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:title="System">
+            <menu>
+                <item
+                    android:id="@+id/about"
+                    android:title="About"
+                    android:icon="@drawable/ic_about_us_24"
+                    />
+                <item
+                    android:id="@+id/settings"
+                    android:title="Settings"
+                    android:icon="@drawable/ic_baseline_settings_24"
+                    />
+            </menu>
+
+        </item>
+    </group>
+    <group android:checkableBehavior="single">
+        <item android:title="Account">
+            <menu>
+                <item
+                    android:id="@+id/log_out"
+                    android:title="Log out"
+                    android:icon="@drawable/ic_baseline_person_outline_24"
+                    />
+            </menu>
+        </item>
+    </group>
+    <group android:checkableBehavior="single">
+    </group>
+    <group android:checkableBehavior="single">
+    </group>
+</menu>

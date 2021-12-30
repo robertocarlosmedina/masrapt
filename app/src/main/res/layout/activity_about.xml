@@ -54,7 +54,7 @@
 
         <View
             android:id="@+id/user_inform"
-            android:layout_width="372dp"
+            android:layout_width="match_parent"
             android:layout_height="313dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="120dp"
@@ -62,6 +62,7 @@
             android:background="@drawable/container_componentes_menu"
             android:elevation="5dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.6"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/inform" />
 
@@ -199,7 +200,7 @@
             android:id="@+id/whats"
             android:layout_width="20dp"
             android:layout_height="19dp"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="5dp"
             android:elevation="6dp"
             android:src="@drawable/whatsapp"
             app:layout_constraintEnd_toEndOf="@id/bt_whats"
@@ -208,9 +209,9 @@
 
         <ImageView
             android:id="@+id/discord"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_marginTop="7dp"
+            android:layout_width="19dp"
+            android:layout_height="19dp"
+            android:layout_marginTop="5dp"
             android:elevation="6dp"
             android:src="@drawable/discord"
             app:layout_constraintEnd_toEndOf="@id/bt_discord"
@@ -239,6 +240,7 @@
             android:text="Roberto Medina"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/user_inform"
+            android:textSize="16dp"
             app:layout_constraintStart_toStartOf="@+id/user_inform"
             app:layout_constraintTop_toBottomOf="@+id/author" />
 
@@ -246,12 +248,11 @@
             android:id="@+id/bt_linkdin"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginStart="116dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/btn_whats_discord"
             android:elevation="6dp"
-            app:layout_constraintEnd_toStartOf="@+id/github"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintEnd_toEndOf="@+id/user_inform"
+            app:layout_constraintHorizontal_bias="0.287"
             app:layout_constraintStart_toStartOf="@+id/user_inform"
             app:layout_constraintTop_toBottomOf="@+id/textView2"
             app:layout_goneMarginTop="24dp"
@@ -273,17 +274,17 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="28dp"
             android:background="@drawable/btn_whats_discord"
             android:elevation="6dp"
-            app:layout_constraintEnd_toStartOf="@+id/gmail"
+            app:layout_constraintEnd_toEndOf="@+id/user_inform"
+            app:layout_constraintStart_toStartOf="@+id/user_inform"
             app:layout_constraintTop_toBottomOf="@+id/textView2"
             tools:ignore="MissingConstraints" />
 
         <ImageView
             android:id="@+id/github"
             android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_height="21dp"
             android:layout_marginTop="5dp"
             android:elevation="6dp"
             android:src="@drawable/github"
@@ -296,11 +297,11 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="20dp"
-
-            android:layout_marginEnd="116dp"
             android:background="@drawable/btn_whats_discord"
             android:elevation="6dp"
             app:layout_constraintEnd_toEndOf="@+id/user_inform"
+            app:layout_constraintHorizontal_bias="0.704"
+            app:layout_constraintStart_toStartOf="@+id/user_inform"
             app:layout_constraintTop_toBottomOf="@+id/textView2"
             tools:ignore="MissingConstraints" />
 
@@ -323,6 +324,7 @@
             android:elevation="5dp"
             android:text="Ronaldo Guilherme"
             android:textStyle="bold"
+            android:textSize="16dp"
             app:layout_constraintEnd_toEndOf="@+id/user_inform"
             app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="@+id/user_inform"
@@ -333,12 +335,11 @@
             android:id="@+id/bt_linkdin_1"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginStart="116dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/btn_whats_discord"
             android:elevation="6dp"
-            app:layout_constraintEnd_toStartOf="@+id/github"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintEnd_toEndOf="@+id/user_inform"
+            app:layout_constraintHorizontal_bias="0.287"
             app:layout_constraintStart_toStartOf="@+id/user_inform"
             app:layout_constraintTop_toBottomOf="@+id/author_2"
             app:layout_goneMarginTop="24dp"
@@ -360,10 +361,11 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="28dp"
             android:background="@drawable/btn_whats_discord"
             android:elevation="6dp"
-            app:layout_constraintEnd_toStartOf="@+id/gmail_1"
+            app:layout_constraintEnd_toEndOf="@+id/user_inform"
+            app:layout_constraintHorizontal_bias="0.704"
+            app:layout_constraintStart_toStartOf="@+id/user_inform"
             app:layout_constraintTop_toBottomOf="@+id/author_2"
             tools:ignore="MissingConstraints" />
 
@@ -384,10 +386,10 @@
             android:layout_height="30dp"
             android:layout_marginTop="20dp"
 
-            android:layout_marginEnd="116dp"
             android:background="@drawable/btn_whats_discord"
             android:elevation="6dp"
             app:layout_constraintEnd_toEndOf="@+id/user_inform"
+            app:layout_constraintStart_toStartOf="@+id/user_inform"
             app:layout_constraintTop_toBottomOf="@+id/author_2"
             tools:ignore="MissingConstraints" />
 
