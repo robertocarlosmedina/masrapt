@@ -1,56 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:background="?attr/colorPrimaryVariant">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/ligth_background"
         tools:context=".About">
 
-        <TextView
-            android:id="@+id/about"
-            style="@style/HeaderTitle"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/header_left_margin"
-            android:layout_marginTop="@dimen/header_top_margin"
-            android:text="About"
-            android:textSize="@dimen/header_text_size"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@id/back"
-            app:layout_constraintStart_toStartOf="@id/back"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:background="@drawable/toolbar_1"
+            app:liftOnScroll="false"
+            tools:ignore="MissingConstraints"
+            android:backgroundTint="?attr/colorPrimaryVariant">
 
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="@dimen/back_arrow_size"
-            android:layout_height="@dimen/back_arrow_size"
-            android:layout_marginLeft="@dimen/back_arrow_left_margin"
-            android:layout_marginTop="@dimen/back_arrow_top_margin"
-            android:src="@drawable/ic_back"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.002"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        <View
-            android:id="@+id/inform"
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+
+                <ImageView
+                    android:id="@+id/back_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.042"
+                    app:layout_constraintStart_toStartOf="@+id/toolbar"
+                    app:layout_constraintTop_toTopOf="@+id/toolbar"
+                    app:srcCompat="@drawable/ic_back" />
+
+                <TextView
+                    android:id="@+id/menu_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="About"
+                    android:textSize="22dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+                    app:layout_constraintEnd_toEndOf="@+id/toolbar"
+                    app:layout_constraintHorizontal_bias="0.199"
+                    app:layout_constraintStart_toStartOf="@+id/toolbar"
+                    app:layout_constraintTop_toTopOf="@+id/toolbar"
+                    app:layout_constraintVertical_bias="0.434" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/container_componentes_menu"
-            android:elevation="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.6"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/about" />
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".About">
+
+
+                <View
+                    android:id="@+id/inform"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="140dp"
+                    android:background="@drawable/container_componentes_menu"
+                    android:elevation="5dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.6"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/user_inform"
@@ -71,8 +103,8 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
             android:layout_marginBottom="30dp"
             android:background="@drawable/container_componentes_menu"
             android:elevation="5dp"
@@ -83,9 +115,9 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="140dp"
-            android:layout_height="140dp"
-            android:layout_marginTop="45dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="60dp"
             android:elevation="6dp"
             android:src="@drawable/user"
             app:layout_constraintEnd_toEndOf="@id/user_inform"
@@ -116,7 +148,6 @@
             android:layout_marginTop="12dp"
             android:elevation="5dp"
             android:text="Provide Feedback"
-            android:textColor="@color/black"
             android:textSize="16dp"
             android:textStyle="normal"
             app:layout_constraintEnd_toEndOf="@id/support"
@@ -146,7 +177,6 @@
             android:elevation="6dp"
             android:gravity="center"
             android:text="@string/app_name"
-            android:textColor="@color/black"
             android:textSize="25dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@id/inform"
@@ -163,7 +193,6 @@
             android:layout_marginRight="80dp"
             android:elevation="6dp"
             android:text="1.0.1"
-            android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="normal"
             app:layout_constraintEnd_toEndOf="@id/masrapt"
@@ -238,9 +267,9 @@
             android:layout_marginTop="15dp"
             android:elevation="5dp"
             android:text="Roberto Medina"
+            android:textSize="16dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/user_inform"
-            android:textSize="16dp"
             app:layout_constraintStart_toStartOf="@+id/user_inform"
             app:layout_constraintTop_toBottomOf="@+id/author" />
 
@@ -323,8 +352,8 @@
             android:layout_marginTop="20dp"
             android:elevation="5dp"
             android:text="Ronaldo Guilherme"
-            android:textStyle="bold"
             android:textSize="16dp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/user_inform"
             app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="@+id/user_inform"
@@ -375,7 +404,7 @@
             android:layout_height="20dp"
             android:layout_marginTop="5dp"
             android:elevation="6dp"
-            android:src="@drawable/github"
+            android:src="@drawable/gmail_logo"
             app:layout_constraintEnd_toEndOf="@id/bt_github_1"
             app:layout_constraintStart_toStartOf="@id/bt_github_1"
             app:layout_constraintTop_toTopOf="@id/bt_github_1" />
@@ -399,10 +428,13 @@
             android:layout_height="18dp"
             android:layout_marginTop="6dp"
             android:elevation="6dp"
-            android:src="@drawable/gmail_logo"
+            android:src="@drawable/github"
             app:layout_constraintEnd_toEndOf="@id/bt_gmail_1"
             app:layout_constraintStart_toStartOf="@+id/bt_gmail_1"
             app:layout_constraintTop_toTopOf="@id/bt_gmail_1" />
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

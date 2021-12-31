@@ -29,18 +29,22 @@
         <entry key="..\:/Github/masrapt/app/src/main/res/mipmap-anydpi-v26/ic_logo.xml" value="0.23489583333333333" />
         <entry key="app/src/main/res/drawable/background_border.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/border.xml" value="0.209375" />
+        <entry key="app/src/main/res/drawable/btn_whats_discord.xml" value="0.10520833333333333" />
         <entry key="app/src/main/res/drawable/buttom.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/container_componentes_menu.xml" value="0.134375" />
+        <entry key="app/src/main/res/drawable/container_componetes.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/edit_text.xml" value="0.209375" />
+        <entry key="app/src/main/res/drawable/ic_back.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_map_24.xml" value="0.10572916666666667" />
         <entry key="app/src/main/res/drawable/ic_baseline_my_location_24.xml" value="0.10572916666666667" />
         <entry key="app/src/main/res/drawable/ic_baseline_timeline_24.xml" value="0.10572916666666667" />
         <entry key="app/src/main/res/drawable/ic_user.xml" value="0.10520833333333333" />
-        <entry key="app/src/main/res/layout/activity_about.xml" value="0.40275650842266464" />
-        <entry key="app/src/main/res/layout/activity_change_password.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.2717219589257504" />
+        <entry key="app/src/main/res/drawable/toolbar.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_about.xml" value="0.13297045101088648" />
+        <entry key="app/src/main/res/layout/activity_change_password.xml" value="0.4131403118040089" />
+        <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.23224568138195778" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/activity_settings.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_settings.xml" value="0.23604465709728867" />
         <entry key="app/src/main/res/layout/activity_tela_cadastro.xml" value="0.27014218009478674" />
         <entry key="app/src/main/res/layout/activity_tela_login.xml" value="0.27014218009478674" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.1" />

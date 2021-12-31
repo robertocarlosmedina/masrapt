@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".Dashboard_activity"
     android:fitsSystemWindows="true"
-    tools:openDrawer="">
+    android:background="?attr/colorPrimaryVariant"
+    tools:openDrawer="end">
 
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
@@ -47,6 +48,7 @@
                     app:layout_constraintEnd_toStartOf="@+id/user_icon"
                     app:title="@string/app_name"
                     tools:ignore="MissingConstraints"
+                    android:background="@drawable/toolbar"
                     tools:layout_editor_absoluteY="0dp">
 
                 </androidx.appcompat.widget.Toolbar>
@@ -61,28 +63,15 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/user"
                     tools:ignore="MissingConstraints" />
-
-           <!--     <ImageView
-                    android:id="@+id/menu_icon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="20dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/toolbar"
-                    app:layout_constraintHorizontal_bias="0.454"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_baseline_menu_24" />
--->
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/nav_view"
-            style="@style/Edit_text"
             android:layout_width="wrap_content"
-            android:layout_height="75dp"
+            android:layout_height="60dp"
+            android:padding="10dp"
             android:background="?android:attr/windowBackground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

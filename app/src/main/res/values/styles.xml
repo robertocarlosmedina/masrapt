@@ -3,21 +3,18 @@
     <style name="containerComponentes">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">250dp</item>
-        <item name="android:background">@drawable/container_componetes</item>
         <item name="android:layout_margin">20dp</item>
     </style>
     <style name="containerMenu">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">250dp</item>
         <item name="android:background">@drawable/container_componentes_menu</item>
-        <item name="android:layout_margin">20dp</item>
         <item name="elevation">10dp</item>
     </style>
 
     <style name="logo_title">
         <item name="android:layout_width">200dp</item>
         <item name="android:height">70dp</item>
-        <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">40dp</item>
 

@@ -65,6 +65,8 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
 
         setSupportActionBar(toolbar);
 
+ // <!-- android:background="?attr/colorPrimary"   USE COLOR IN THEMES -->
+
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
@@ -73,7 +75,7 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
         navigationView.setNavigationItemSelectedListener(this);
     }
     public void openLoginInfo(){
-        Intent intent = new Intent(this, TelaLogin.class);
+        Intent intent = new Intent(this, ChangePassword.class);
         startActivity(intent);
     }
 
