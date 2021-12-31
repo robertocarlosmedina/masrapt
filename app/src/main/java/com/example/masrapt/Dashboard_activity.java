@@ -1,12 +1,13 @@
 package com.example.masrapt;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -18,19 +19,21 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.masrapt.databinding.ActivityDashboardBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 public class Dashboard_activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActivityDashboardBinding binding;
+    private FloatingActionButton floatingActionButton;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
     private ImageView icon_user;
+    private Dialog unLogDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +56,15 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
             }
         });
 
-        // Hidde or show item
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_selector);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Dashboard_activity.this, "Route Selector clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Hide or show item
         // Menu menu = navigationView.getMenu();
         // menu.findItem(R.id.log_out).setVisible(false);
 
@@ -65,7 +76,7 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
 
         setSupportActionBar(toolbar);
 
- // <!-- android:background="?attr/colorPrimary"   USE COLOR IN THEMES -->
+        // <!-- android:background="?attr/colorPrimary"   USE COLOR IN THEMES -->
 
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -73,10 +84,26 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
+
+        unLogDialog = new Dialog (Dashboard_activity.this);
+        unLogDialog.setContentView(R.layout.user_unlogged_dialog);
+        unLogDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_border));
+        unLogDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        unLogDialog.setCancelable(true);
+
+        unLogDialog = new Dialog (Dashboard_activity.this);
+        unLogDialog.setContentView(R.layout.user_logged_dialog);
+        unLogDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_border));
+        unLogDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        unLogDialog.setCancelable(true);
+
+
     }
+
     public void openLoginInfo(){
-        Intent intent = new Intent(this, ChangePassword.class);
-        startActivity(intent);
+        unLogDialog.show();
+        // Intent intent = new Intent(this, ChangePassword.class);
+        // startActivity(intent);
     }
 
     @Override
@@ -102,6 +129,7 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
                 Intent intent_1 = new Intent(Dashboard_activity.this, Settings.class);
                 startActivity(intent_1);
                 break;
+
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);

@@ -14,7 +14,7 @@
     <dimen name="header_top_margin">10dp</dimen>
     <dimen name="menu_title_font_size">12dp</dimen>
     <dimen name="menu_header_left_margin">20dp</dimen>
-    <dimen name="menu_header_spacing">28dp</dimen>
+    <dimen name="menu_header_spacing">10dp</dimen>
     <dimen name="menu_element_font_size">16dp</dimen>
     <dimen name="menu_elem_left_margin">20dp</dimen>
     <dimen name="routes_place_font_size">16dp</dimen>

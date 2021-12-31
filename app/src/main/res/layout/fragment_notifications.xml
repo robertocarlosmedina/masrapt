@@ -41,7 +41,6 @@
                     android:id="@+id/route_1_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/menu_header_spacing"
                     android:elevation="6dp"
                     android:gravity="center"
                     android:text="Route L1"
@@ -56,7 +55,6 @@
                     android:layout_height="wrap_content"
                     android:layout_row="0"
                     android:layout_column="0"
-                    android:layout_marginLeft="@dimen/menu_header_spacing"
                     android:layout_marginTop="16dp"
                     android:elevation="6dp"
                     android:text="Maderalzinho - Cruz - Bela Vista -  Liceu Velho"
@@ -69,7 +67,6 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/menu_header_spacing"
                     android:layout_marginTop="15dp"
                     android:orientation="horizontal"
                     android:textAlignment="textStart">
@@ -77,7 +74,7 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/clock" />
+                        android:src="@drawable/ic_baseline_av_timer_24" />
 
                     <TextView
                         android:id="@+id/ewe"
@@ -94,7 +91,7 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginLeft="@dimen/menu_header_spacing"
-                        android:src="@drawable/bus2" />
+                        android:src="@drawable/ic_baseline_bus_24" />
 
                     <TextView
                         android:id="@+id/we"
@@ -134,7 +131,6 @@
                     android:id="@+id/route_1_name_a"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/menu_header_spacing"
                     android:elevation="6dp"
                     android:gravity="center"
                     android:text="Route L2"
@@ -149,7 +145,6 @@
                     android:layout_height="wrap_content"
                     android:layout_row="0"
                     android:layout_column="0"
-                    android:layout_marginLeft="@dimen/menu_header_spacing"
                     android:layout_marginTop="16dp"
                     android:elevation="6dp"
                     android:text="Maderalzinho - Cruz - Bela Vista -  Liceu Velho"
@@ -162,7 +157,6 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/menu_header_spacing"
                     android:layout_marginTop="15dp"
                     android:orientation="horizontal"
                     android:textAlignment="textStart">
@@ -170,7 +164,7 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/clock" />
+                        android:src="@drawable/ic_baseline_av_timer_24" />
 
                     <TextView
                         android:id="@+id/ewe_a"
@@ -187,7 +181,7 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginLeft="@dimen/menu_header_spacing"
-                        android:src="@drawable/bus2" />
+                        android:src="@drawable/ic_baseline_bus_24" />
 
                     <TextView
                         android:id="@+id/we_a"
@@ -229,7 +223,6 @@
                     android:id="@+id/route_1_name_b"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/menu_header_spacing"
                     android:elevation="6dp"
                     android:gravity="center"
                     android:text="Route L1"
@@ -244,7 +237,6 @@
                     android:layout_height="wrap_content"
                     android:layout_row="0"
                     android:layout_column="0"
-                    android:layout_marginLeft="@dimen/menu_header_spacing"
                     android:layout_marginTop="16dp"
                     android:elevation="6dp"
                     android:text="Maderalzinho - Cruz - Bela Vista -  Liceu Velho"
@@ -257,7 +249,6 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/menu_header_spacing"
                     android:layout_marginTop="15dp"
                     android:orientation="horizontal"
                     android:textAlignment="textStart">
@@ -265,7 +256,7 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/clock" />
+                        android:src="@drawable/ic_baseline_av_timer_24" />
 
                     <TextView
                         android:id="@+id/ewe_b"
@@ -282,7 +273,7 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginLeft="@dimen/menu_header_spacing"
-                        android:src="@drawable/bus2" />
+                        android:src="@drawable/ic_baseline_bus_24" />
 
                     <TextView
                         android:id="@+id/we_b"
@@ -324,7 +315,6 @@
                     android:id="@+id/route_1_name_c"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/menu_header_spacing"
                     android:elevation="6dp"
                     android:gravity="center"
                     android:text="Route L1"
@@ -339,7 +329,6 @@
                     android:layout_height="wrap_content"
                     android:layout_row="0"
                     android:layout_column="0"
-                    android:layout_marginLeft="@dimen/menu_header_spacing"
                     android:layout_marginTop="16dp"
                     android:elevation="6dp"
                     android:text="Maderalzinho - Cruz - Bela Vista -  Liceu Velho"
@@ -352,7 +341,6 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/menu_header_spacing"
                     android:layout_marginTop="15dp"
                     android:orientation="horizontal"
                     android:textAlignment="textStart">
@@ -360,7 +348,7 @@
                     <ImageView
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/clock" />
+                        android:src="@drawable/ic_baseline_av_timer_24" />
 
                     <TextView
                         android:id="@+id/ewe_c"
@@ -377,7 +365,7 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginLeft="@dimen/menu_header_spacing"
-                        android:src="@drawable/bus2" />
+                        android:src="@drawable/ic_baseline_bus_24" />
 
                     <TextView
                         android:id="@+id/we_c"
