@@ -83,21 +83,7 @@
             app:layout_constraintStart_toStartOf="@id/container_componentes"
             app:layout_constraintTop_toTopOf="@id/container_componentes" />
 
-        <TextView
-            android:id="@+id/signUp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/signUp"
-            android:textColor="@color/blue"
-            android:textSize="14dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btn_login"
-            tools:ignore="MissingConstraints" />
-
+        <!--
         <TextView
             android:id="@+id/F_password"
             android:layout_width="wrap_content"
@@ -114,11 +100,40 @@
             app:layout_constraintTop_toBottomOf="@id/signUp"
             app:layout_constraintVertical_bias="0.0" />
 
+        -->
+
+        <TextView
+            android:id="@+id/not_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="84dp"
+            android:layout_marginBottom="20dp"
+            android:text="Don't have an account?"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/signUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/signUp"
+            android:textColor="@color/blue"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="7dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/not_account"
+            tools:ignore="MissingConstraints" />
+
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_login"
             style="@style/Buttom"
             android:layout_width="@dimen/input_box_width"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_between_input_box"
             android:text="@string/login"
             android:textSize="16dp"
@@ -126,5 +141,6 @@
             app:layout_constraintHorizontal_bias="0.507"
             app:layout_constraintStart_toStartOf="@id/container_componentes"
             app:layout_constraintTop_toBottomOf="@id/password" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

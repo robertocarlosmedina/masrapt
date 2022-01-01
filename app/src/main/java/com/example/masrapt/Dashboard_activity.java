@@ -2,11 +2,15 @@ package com.example.masrapt;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.textclassifier.TextLanguage;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -28,12 +32,12 @@ import com.google.android.material.navigation.NavigationView;
 public class Dashboard_activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActivityDashboardBinding binding;
-    private FloatingActionButton floatingActionButton;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
-    private ImageView icon_user;
-    private Dialog unLogDialog;
+    private ImageView icon_user, close_icon;
+    private Dialog unLoggedDialog, loggedDialog, route_selector_dialog;
+    private TextView login, floating_selector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,13 +60,6 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
             }
         });
 
-        floatingActionButton = (FloatingActionButton) findViewById(R.id.floating_selector);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(Dashboard_activity.this, "Route Selector clicked", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         // Hide or show item
         // Menu menu = navigationView.getMenu();
@@ -85,25 +82,77 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        unLogDialog = new Dialog (Dashboard_activity.this);
-        unLogDialog.setContentView(R.layout.user_unlogged_dialog);
-        unLogDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_border));
-        unLogDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        unLogDialog.setCancelable(true);
+        unLoggedDialog = new Dialog (Dashboard_activity.this);
+        unLoggedDialog.setContentView(R.layout.user_unlogged_dialog);
+        unLoggedDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialog_bg));
+        unLoggedDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        unLoggedDialog.setCancelable(true);
 
-        unLogDialog = new Dialog (Dashboard_activity.this);
-        unLogDialog.setContentView(R.layout.user_logged_dialog);
-        unLogDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.background_border));
-        unLogDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        unLogDialog.setCancelable(true);
+        close_icon = (ImageView) unLoggedDialog.findViewById(R.id.close_icon);
+        close_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                close_dialog();
+            }
+        });
 
+        login = (TextView) unLoggedDialog.findViewById(R.id.login);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Dashboard_activity.this, TelaLogin.class);
+                startActivity(intent);
+            }
+        });
 
+        loggedDialog = new Dialog (Dashboard_activity.this);
+        loggedDialog.setContentView(R.layout.user_logged_dialog);
+        loggedDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialog_bg));
+        loggedDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        loggedDialog.setCancelable(true);
+
+        close_icon = (ImageView) loggedDialog.findViewById(R.id.close_icon);
+        close_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                close_dialog();
+            }
+        });
+
+        route_selector_dialog = new Dialog (Dashboard_activity.this);
+        route_selector_dialog.setContentView(R.layout.select_route_dialog);
+        route_selector_dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialog_bg));
+        route_selector_dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        route_selector_dialog.setCancelable(true);
+
+        floating_selector = (TextView) findViewById(R.id.floating_selector);
+        floating_selector.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                route_selector_dialog.show();
+            }
+        });
+
+        close_icon = (ImageView) route_selector_dialog.findViewById(R.id.close_icon);
+        close_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                close_dialog();
+            }
+        });
     }
 
     public void openLoginInfo(){
-        unLogDialog.show();
+        // loggedDialog.show();
+        unLoggedDialog.show();
         // Intent intent = new Intent(this, ChangePassword.class);
         // startActivity(intent);
+    }
+
+    public void close_dialog(){
+        unLoggedDialog.hide();
+        loggedDialog.hide();
+        route_selector_dialog.hide();
     }
 
     @Override

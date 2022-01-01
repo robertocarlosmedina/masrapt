@@ -38,7 +38,7 @@
         <item name="android:layout_marginRight">40dp</item>
         <item name="android:layout_marginTop">15dp</item>
         <item name="android:background">@drawable/buttom</item>
-        <item name="android:padding">20dp</item>
+        <item name="android:padding">10dp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">20dp</item>
         <item name="android:textStyle">bold</item>

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="?attr/colorPrimaryVariant">
+    android:background="?attr/colorPrimaryVariant"
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -17,9 +17,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/toolbar_1"
+            android:backgroundTint="?attr/colorPrimaryVariant"
             app:liftOnScroll="false"
-            tools:ignore="MissingConstraints"
-            android:backgroundTint="?attr/colorPrimaryVariant">
+            tools:ignore="MissingConstraints">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -74,10 +74,10 @@
                     android:id="@+id/themes"
                     style="@style/containerMenu"
                     android:layout_height="130dp"
-                    android:layout_marginTop="140dp"
-                    android:elevation="5dp"
-                    android:layout_marginRight="20dp"
                     android:layout_marginLeft="20dp"
+                    android:layout_marginTop="140dp"
+                    android:layout_marginRight="20dp"
+                    android:elevation="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -86,11 +86,11 @@
                 <View
                     android:id="@+id/account"
                     style="@style/containerMenu"
-                    android:layout_height="160dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
                     android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginRight="20dp"
-
                     android:elevation="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -132,11 +132,13 @@
 
                 <TextView
                     android:id="@+id/txt_changePassword"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/menu_elem_left_margin"
-                    android:layout_marginTop="28dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginRight="@dimen/menu_elem_left_margin"
                     android:elevation="5dp"
+                    android:padding="10dp"
                     android:text="@string/changer_password"
                     android:textSize="@dimen/menu_element_font_size"
                     app:layout_constraintEnd_toEndOf="@id/account"
@@ -146,11 +148,13 @@
 
                 <TextView
                     android:id="@+id/txt_deletePassword"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/menu_elem_left_margin"
-                    android:layout_marginTop="@dimen/menu_header_spacing"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="@dimen/menu_elem_left_margin"
                     android:elevation="5dp"
+                    android:padding="10dp"
                     android:text="@string/delete_account"
                     android:textSize="@dimen/menu_element_font_size"
                     app:layout_constraintEnd_toEndOf="@id/account"
@@ -160,9 +164,12 @@
 
                 <TextView
                     android:id="@+id/theme_settings"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/menu_header_spacing"
+                    android:layout_marginLeft="@dimen/menu_elem_left_margin"
+                    android:layout_marginTop="20dp"
+
+                    android:layout_marginRight="@dimen/menu_elem_left_margin"
                     android:elevation="5dp"
                     android:text="Themes"
                     android:textSize="@dimen/menu_element_font_size"
@@ -175,36 +182,16 @@
                     android:id="@+id/selected_theme"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/menu_elem_left_margin"
                     android:layout_marginTop="4dp"
                     android:elevation="5dp"
-                    android:text="Dark"
+                    android:text="@string/current_theme"
                     android:textSize="12dp"
                     app:layout_constraintEnd_toEndOf="@+id/themes"
-                    app:layout_constraintHorizontal_bias="0.06"
+                    app:layout_constraintHorizontal_bias="0.00"
                     app:layout_constraintStart_toStartOf="@+id/themes"
                     app:layout_constraintTop_toBottomOf="@+id/theme_settings" />
 
-                <!--
-                <RadioGroup
-                    android:layout_width="200dp"
-                    android:layout_height="100dp"
-                    app:layout_constraintStart_toStartOf="@id/txt_themes"
-                    android:background="@color/nuvem"
-                    app:layout_constraintTop_toBottomOf="@id/txt_themes" >
-
-                    <RadioButton
-                        android:id="@+id/light_theme"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Ligth" />
-
-                    <RadioButton
-                        android:id="@+id/dark_theme"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Dark" />
-                </RadioGroup>
-                -->
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

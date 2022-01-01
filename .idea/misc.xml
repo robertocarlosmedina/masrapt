@@ -33,11 +33,15 @@
         <entry key="app/src/main/res/drawable/buttom.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/container_componentes_menu.xml" value="0.134375" />
         <entry key="app/src/main/res/drawable/container_componetes.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/dialog_bg.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/edit_text.xml" value="0.209375" />
+        <entry key="app/src/main/res/drawable/floating_controler.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/ic_back.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_av_timer_24.xml" value="0.2921875" />
         <entry key="app/src/main/res/drawable/ic_baseline_bus_24.xml" value="0.2921875" />
         <entry key="app/src/main/res/drawable/ic_baseline_bus_filled_24.xml" value="0.2876923076923077" />
+        <entry key="app/src/main/res/drawable/ic_baseline_close_24.xml" value="0.209375" />
+        <entry key="app/src/main/res/drawable/ic_baseline_fiber_manual_record_24.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/ic_baseline_map_24.xml" value="0.10572916666666667" />
         <entry key="app/src/main/res/drawable/ic_baseline_my_location_24.xml" value="0.10572916666666667" />
         <entry key="app/src/main/res/drawable/ic_baseline_timeline_24.xml" value="0.10572916666666667" />
@@ -45,18 +49,22 @@
         <entry key="app/src/main/res/drawable/toolbar.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_about.xml" value="0.13297045101088648" />
         <entry key="app/src/main/res/layout/activity_change_password.xml" value="0.4131403118040089" />
-        <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.23224568138195778" />
+        <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.25781792911744267" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.23604465709728867" />
         <entry key="app/src/main/res/layout/activity_tela_cadastro.xml" value="0.27014218009478674" />
-        <entry key="app/src/main/res/layout/activity_tela_login.xml" value="0.27014218009478674" />
+        <entry key="app/src/main/res/layout/activity_tela_login.xml" value="0.2" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/delete_account_confirmation_dialog.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.151268115942029" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.25" />
         <entry key="app/src/main/res/layout/header.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/select_route_dialog.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/themes_selectors.xml" value="0.25" />
         <entry key="app/src/main/res/layout/user_logged_dialog.xml" value="0.33" />
         <entry key="app/src/main/res/layout/user_unlog_dialog.xml" value="0.14628623188405798" />
+        <entry key="app/src/main/res/layout/user_unlogged_dialog.xml" value="0.33" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/menu/main.xml" value="0.19322916666666667" />
         <entry key="app/src/main/res/menu/main_menu.xml" value="0.1" />

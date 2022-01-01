@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/nuvem"></solid>
+    <solid android:color="?attr/colorSecondary"></solid>
     <corners android:radius="50dp"></corners>
-    <stroke android:color="@color/nuvem" android:width="5dp"></stroke>
+    <!--
+    <stroke android:color="@color/nuvem" android:width="0.01sp"></stroke>
+    -->
 
 </shape>
