@@ -1,6 +1,7 @@
 package com.example.masrapt;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -9,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,13 +21,13 @@ public class Settings extends AppCompatActivity {
     private TextView change_password, delete_account, change_themes, cancel_txt;
     private Dialog theme_selector, delete_account_dialog;
     private Button yes_button, no_button;
+    private RadioGroup themes_radio_group;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
 
         icon_back = (ImageView) findViewById(R.id.back_icon);
         icon_back.setOnClickListener(new View.OnClickListener() {
@@ -45,6 +48,28 @@ public class Settings extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 theme_selector.hide();
+            }
+        });
+
+        themes_radio_group = (RadioGroup) theme_selector.findViewById(R.id.theme_options);
+
+        themes_radio_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.light_theme:
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        Toast.makeText(Settings.this, "Light themes enabled", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.dark_theme:
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        Toast.makeText(Settings.this, "Dark themes enabled", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.system_theme:
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                        Toast.makeText(Settings.this, "System default themes enabled", Toast.LENGTH_SHORT).show();
+                        break;
+                }
             }
         });
 

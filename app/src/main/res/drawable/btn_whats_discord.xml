@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="?attr/colorOnSecondary"
+    <solid android:color="?attr/colorSecondary"
         android:background="@android:drawable/dialog_holo_light_frame"></solid>
     <corners android:radius="50dp"></corners>
     <stroke android:color="@color/gray" android:width="2dp"></stroke>

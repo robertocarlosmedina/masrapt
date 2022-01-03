@@ -27,6 +27,8 @@
     android:layout_marginTop="20dp"
     app:layout_constraintStart_toStartOf="@id/title"
     app:layout_constraintTop_toBottomOf="@id/title">
+    <!-- android:checkedButton="@id/system_theme" -->
+
 
     <RadioButton
         android:id="@+id/light_theme"
@@ -43,7 +45,11 @@
         android:id="@+id/system_theme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="System default" />
+        android:text="System default"
+        android:outlineSpotShadowColor="@color/blue"
+        android:textColorLink="@color/blue"
+        android:textColorHint="@color/blue"
+        android:textSelectHandle="@color/blue"/>
 
 
 </RadioGroup>
