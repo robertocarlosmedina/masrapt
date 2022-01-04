@@ -14,11 +14,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.masrapt.R;
 import com.example.masrapt.databinding.FragmentHomeBinding;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.maps.SupportMapFragment;
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
+    private FusedLocationProviderClient client_location;
+    private View mapFragment;
+    private TextView coord_display;
+    private int REQUEST_CODE = 111;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -28,13 +34,10 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        mapFragment = (View) root.findViewById(R.id.maps);
+
+        coord_display = (TextView) root.findViewById(R.id.text);
+        // coord_display.setText("oijoefijio");
         return root;
     }
 

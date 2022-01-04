@@ -23,5 +23,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="current_theme">System Default</string>
     <string name="current_route">All</string>
+    <string name="api_key">AIzaSyDZ6HCz1XHDcfRdDA_CE1KxSuIxqzLOv_A</string>
 
 </resources>

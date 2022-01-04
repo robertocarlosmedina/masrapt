@@ -1,7 +1,11 @@
 package com.example.masrapt;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -13,12 +17,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -37,7 +54,10 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
     private Toolbar toolbar;
     private ImageView icon_user, close_icon;
     private Dialog unLoggedDialog, loggedDialog, route_selector_dialog;
-    private TextView login, floating_selector;
+    private TextView login, floating_selector, coord_display;
+    private FusedLocationProviderClient client_location;
+    private SupportMapFragment mapFragment;
+    private int REQUEST_CODE = 111;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,10 +86,12 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
         // menu.findItem(R.id.log_out).setVisible(false);
 
         /* drawer hooks
-        * */
+         * */
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.drawer_nav_view);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        coord_display = (TextView) findViewById(R.id.text);
 
         setSupportActionBar(toolbar);
 
@@ -82,7 +104,7 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        unLoggedDialog = new Dialog (Dashboard_activity.this);
+        unLoggedDialog = new Dialog(Dashboard_activity.this);
         unLoggedDialog.setContentView(R.layout.user_unlogged_dialog);
         unLoggedDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialog_bg));
         unLoggedDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -105,7 +127,7 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
             }
         });
 
-        loggedDialog = new Dialog (Dashboard_activity.this);
+        loggedDialog = new Dialog(Dashboard_activity.this);
         loggedDialog.setContentView(R.layout.user_logged_dialog);
         loggedDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialog_bg));
         loggedDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -119,7 +141,7 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
             }
         });
 
-        route_selector_dialog = new Dialog (Dashboard_activity.this);
+        route_selector_dialog = new Dialog(Dashboard_activity.this);
         route_selector_dialog.setContentView(R.layout.select_route_dialog);
         route_selector_dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialog_bg));
         route_selector_dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -140,6 +162,68 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
                 close_dialog();
             }
         });
+
+        // Integrating the map
+
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.maps);
+        client_location = LocationServices.getFusedLocationProviderClient(Dashboard_activity.this);
+
+        // if (ActivityCompat.checkSelfPermission(Dashboard_activity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+        //        == PackageManager.PERMISSION_GRANTED) {
+        //    getCurrentLocation();
+        //}
+        //else {
+        //    ActivityCompat.requestPermissions(Dashboard_activity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+        //}
+
+    }
+
+    public void getCurrentLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Task<Location> task = client_location.getLastLocation();
+
+        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    mapFragment.getMapAsync(new OnMapReadyCallback() {
+                        @Override
+                        public void onMapReady(@NonNull GoogleMap googleMap) {
+                            coord_display.setText("lat: "+location.getLatitude()+ "  lon: "+location.getLongitude());
+                            LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+
+                            MarkerOptions markerOptions = new MarkerOptions().position(latlng).title("You are Here");
+
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 14));
+
+                            googleMap.addMarker(markerOptions).showInfoWindow();
+
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getCurrentLocation();
+            } else {
+                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     public void openLoginInfo(){
