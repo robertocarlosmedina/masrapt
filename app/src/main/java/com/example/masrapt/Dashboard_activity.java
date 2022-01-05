@@ -1,6 +1,7 @@
 package com.example.masrapt;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -46,7 +47,7 @@ import com.example.masrapt.databinding.ActivityDashboardBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
-public class Dashboard_activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class Dashboard_activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private ActivityDashboardBinding binding;
     private DrawerLayout drawerLayout;
@@ -57,7 +58,8 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
     private TextView login, floating_selector, coord_display;
     private FusedLocationProviderClient client_location;
     private SupportMapFragment mapFragment;
-    private int REQUEST_CODE = 111;
+    private final int REQUEST_CODE = 111;
+    private Location current_location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,7 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
 
         binding = ActivityDashboardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -90,8 +93,6 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.drawer_nav_view);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        coord_display = (TextView) findViewById(R.id.text);
 
         setSupportActionBar(toolbar);
 
@@ -162,68 +163,6 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
                 close_dialog();
             }
         });
-
-        // Integrating the map
-
-        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.maps);
-        client_location = LocationServices.getFusedLocationProviderClient(Dashboard_activity.this);
-
-        // if (ActivityCompat.checkSelfPermission(Dashboard_activity.this, Manifest.permission.ACCESS_FINE_LOCATION)
-        //        == PackageManager.PERMISSION_GRANTED) {
-        //    getCurrentLocation();
-        //}
-        //else {
-        //    ActivityCompat.requestPermissions(Dashboard_activity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
-        //}
-
-    }
-
-    public void getCurrentLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        Task<Location> task = client_location.getLastLocation();
-
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    mapFragment.getMapAsync(new OnMapReadyCallback() {
-                        @Override
-                        public void onMapReady(@NonNull GoogleMap googleMap) {
-                            coord_display.setText("lat: "+location.getLatitude()+ "  lon: "+location.getLongitude());
-                            LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
-
-                            MarkerOptions markerOptions = new MarkerOptions().position(latlng).title("You are Here");
-
-                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 14));
-
-                            googleMap.addMarker(markerOptions).showInfoWindow();
-
-                        }
-                    });
-                }
-            }
-        });
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getCurrentLocation();
-            } else {
-                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
-            }
-        }
     }
 
     public void openLoginInfo(){
@@ -268,4 +207,5 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }
