@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="20dp"
-    android:background="@drawable/border"
+    android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
-    android:layout_marginLeft="20dp">
+    android:background="@drawable/border"
+    android:padding="20dp">
 
     <TextView
         android:id="@+id/title"
@@ -18,41 +18,42 @@
         android:textStyle="bold"
         tools:ignore="MissingConstraints" />
 
-<RadioGroup
-    android:id="@+id/theme_options"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
-    android:layout_marginTop="20dp"
-    app:layout_constraintStart_toStartOf="@id/title"
-    app:layout_constraintTop_toBottomOf="@id/title">
-    <!-- android:checkedButton="@id/system_theme" -->
-
-
-    <RadioButton
-        android:id="@+id/light_theme"
+    <RadioGroup
+        android:id="@+id/theme_options"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Light" />
-
-    <RadioButton
-        android:id="@+id/dark_theme"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Dark" />
-    <RadioButton
-        android:id="@+id/system_theme"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="System default"
-        android:outlineSpotShadowColor="@color/blue"
-        android:textColorLink="@color/blue"
-        android:textColorHint="@color/blue"
-        android:textSelectHandle="@color/blue"/>
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        app:layout_constraintStart_toStartOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/title">
+        <!-- android:checkedButton="@id/system_theme" -->
 
 
-</RadioGroup>
+        <RadioButton
+            android:id="@+id/light_theme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Light" />
+
+        <RadioButton
+            android:id="@+id/dark_theme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dark" />
+
+        <RadioButton
+            android:id="@+id/system_theme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:outlineSpotShadowColor="@color/blue"
+            android:text="System default"
+            android:textColorHint="@color/blue"
+            android:textColorLink="@color/blue"
+            android:textSelectHandle="@color/blue" />
+
+
+    </RadioGroup>
 
     <TextView
         android:id="@+id/cancel_txt"
@@ -60,13 +61,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginRight="20dp"
-        app:layout_goneMarginBottom="20dp"
         android:text="Cancel"
-        android:textSize="16dp"
         android:textColor="@color/blue"
+        android:textSize="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/theme_options"
+        app:layout_goneMarginBottom="20dp"
         tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
