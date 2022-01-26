@@ -1,42 +1,32 @@
 package com.example.masrapt;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.textclassifier.TextLanguage;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
@@ -44,8 +34,11 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.masrapt.databinding.ActivityDashboardBinding;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+
+import java.security.Policy;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Dashboard_activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -60,6 +53,7 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
     private SupportMapFragment mapFragment;
     private final int REQUEST_CODE = 111;
     private Location current_location;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,10 +160,7 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
     }
 
     public void openLoginInfo(){
-        // loggedDialog.show();
         unLoggedDialog.show();
-        // Intent intent = new Intent(this, ChangePassword.class);
-        // startActivity(intent);
     }
 
     public void close_dialog(){
@@ -192,7 +183,6 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         System.out.print(item.getItemId());
         switch (item.getItemId()){
-
             case R.id.about:
                 Intent intent = new Intent(Dashboard_activity.this, About.class);
                 startActivity(intent);
@@ -201,11 +191,8 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
                 Intent intent_1 = new Intent(Dashboard_activity.this, Settings.class);
                 startActivity(intent_1);
                 break;
-
         }
-
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
-
 }
