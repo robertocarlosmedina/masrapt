@@ -58,8 +58,9 @@
         <entry key="app/src/main/res/layout/delete_account_confirmation_dialog.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.151268115942029" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.23776223776223776" />
         <entry key="app/src/main/res/layout/header.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/route_des_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/select_route_dialog.xml" value="0.25" />
         <entry key="app/src/main/res/layout/themes_selectors.xml" value="0.25" />
         <entry key="app/src/main/res/layout/user_logged_dialog.xml" value="0.33" />

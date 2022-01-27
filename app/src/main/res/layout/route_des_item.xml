@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/route_1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="12dp"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorSecondary"
+            android:elevation="5dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/route_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="6dp"
+                android:gravity="center"
+                android:text="Route L1"
+                android:textSize="@dimen/route_name_font_size"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/inform"
+                app:layout_constraintTop_toTopOf="@id/inform" />
+
+            <TextView
+                android:id="@+id/route_places"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_marginTop="16dp"
+                android:elevation="6dp"
+                android:text="Maderalzinho - Cruz - Bela Vista -  Liceu Velho"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/routes_place_font_size"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/route_name"
+                app:layout_constraintTop_toTopOf="@id/route_name" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:textAlignment="textStart">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_baseline_av_timer_24" />
+
+                <TextView
+                    android:id="@+id/timer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/route_ico_space"
+                    android:elevation="6dp"
+                    android:gravity="center"
+                    android:text="@string/average_waiting_time"
+                    android:textSize="@dimen/routes_place_font_size"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="@dimen/menu_header_spacing"
+                    android:src="@drawable/ic_baseline_bus_24" />
+
+                <TextView
+                    android:id="@+id/active_bus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/route_ico_space"
+                    android:layout_toEndOf="@+id/ewe"
+                    android:elevation="6dp"
+                    android:text="@string/nr_bus_active"
+                    android:textAlignment="textStart"
+                    android:textSize="@dimen/routes_place_font_size"
+                    android:textStyle="bold" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </LinearLayout>
+
+</androidx.cardview.widget.CardView>

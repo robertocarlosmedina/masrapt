@@ -18,10 +18,15 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.masrapt.Dashboard_activity;
 import com.example.masrapt.R;
+import com.example.masrapt.RouteDescription;
 import com.example.masrapt.databinding.FragmentHomeBinding;
+import com.example.masrapt.ui.notifications.Route;
+import com.example.masrapt.ui.notifications.RouteJSONResponse;
+import com.example.masrapt.ui.notifications.RoutesAPIRoutes;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -36,6 +41,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeFragment extends Fragment implements OnMapReadyCallback{
 
@@ -49,6 +61,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
     private FusedLocationProviderClient client_location;
     private int REQUEST_CODE = 111;
 
+    private ArrayList<Route> routesList;
+    private ArrayList<RouteDescription> routesList_recycl;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = inflater.inflate(R.layout.fragment_home, container, false);
@@ -57,8 +72,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
                 R.id.google_maps);
         mapFragment.getMapAsync(this);
 
+        routesList = new ArrayList<>();
+        routesList_recycl = new ArrayList<>();
+
         client_location = LocationServices.getFusedLocationProviderClient(getActivity());
-        coordenates = (TextView) homeViewModel.findViewById(R.id.text);
+
+        //getRoutesInfo();
 
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -67,8 +86,18 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
         else {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
         }
+
+
         
         return homeViewModel;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        coordenates = (TextView) getActivity().findViewById(R.id.test_display);
+        coordenates.setText("Okokokok");
+        getRoutesInfo();
     }
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
@@ -277,6 +306,37 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
         });
     }
 
+    private void getRoutesInfo() {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.api_base_url))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        RoutesAPIRoutes routesAPIRoutes = retrofit.create(RoutesAPIRoutes.class);
+
+        Call<RouteJSONResponse> call = routesAPIRoutes.getRoutes();
+
+        call.enqueue(new Callback<RouteJSONResponse>() {
+            @Override
+            public void onResponse(Call<RouteJSONResponse> call, Response<RouteJSONResponse> response) {
+                RouteJSONResponse jsonResponse = response.body();
+
+                routesList = new ArrayList<Route>(Arrays.asList(jsonResponse.getRoutes()));
+                String text = "";
+                for (Route route: routesList) {
+                    text = text + " " + route.getName() +" ";
+                }
+                coordenates.setText(text);
+
+            }
+
+            @Override
+            public void onFailure(Call<RouteJSONResponse> call, Throwable t) {
+
+            }
+        });
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();

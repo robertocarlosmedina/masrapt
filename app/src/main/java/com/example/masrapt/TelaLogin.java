@@ -93,7 +93,7 @@ public class TelaLogin extends AppCompatActivity {
         }
         Toast.makeText(TelaLogin.this, "The fields should not be empty", Toast.LENGTH_SHORT).show();
     }
-    
+
     private void getAPIData() {
         Toast.makeText(TelaLogin.this, "Getting data", Toast.LENGTH_SHORT).show();
         Retrofit retrofit = new Retrofit.Builder()
