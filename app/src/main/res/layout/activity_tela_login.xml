@@ -29,7 +29,7 @@
             app:layout_constraintEnd_toEndOf="@id/container_componentes"
             app:layout_constraintHorizontal_bias="0.507"
             app:layout_constraintStart_toStartOf="@id/container_componentes"
-            app:layout_constraintTop_toBottomOf="@id/user" />
+            app:layout_constraintTop_toBottomOf="@id/name_or_email" />
 
         <ImageView
             android:id="@+id/logo"
@@ -67,7 +67,7 @@
             app:layout_constraintTop_toBottomOf="@id/logo_title" />
 
         <EditText
-            android:id="@+id/user"
+            android:id="@+id/name_or_email"
             style="@style/Edit_text"
             android:layout_width="@dimen/input_box_width"
             android:layout_height="56dp"
@@ -141,6 +141,16 @@
             app:layout_constraintHorizontal_bias="0.507"
             app:layout_constraintStart_toStartOf="@id/container_componentes"
             app:layout_constraintTop_toBottomOf="@id/password" />
+
+        <TextView
+            android:id="@+id/test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ok_test"
+            app:layout_constraintBottom_toTopOf="@+id/logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
