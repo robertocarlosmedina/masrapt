@@ -9,7 +9,7 @@ import retrofit2.http.Path;
 public interface CoordinatesAPIRoutes {
 
     @GET("routes/route_coordinates/{id_route}")
-    Call<RouteJSONResponse> getRoutesCoordinates(
+    Call<RouteCoordinatesJSONResponse> getRoutesCoordinates(
             @Path("id_route") int id_route
     );
 }

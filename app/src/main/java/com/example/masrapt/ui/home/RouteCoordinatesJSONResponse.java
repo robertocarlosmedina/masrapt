@@ -4,14 +4,13 @@ import com.example.masrapt.ui.notifications.Route;
 
 public class RouteCoordinatesJSONResponse {
 
-    private RouteCoordinate[] routeCoordinates;
+    private RouteCoordinate[] coordinates;
 
-
-    public RouteCoordinate[] getRouteCoordinates() {
-        return routeCoordinates;
+    public RouteCoordinate[] getCoordinates() {
+        return coordinates;
     }
 
-    public void setRouteCoordinates(RouteCoordinate[] routeCoordinates) {
-        this.routeCoordinates = routeCoordinates;
+    public void setCoordinates(RouteCoordinate[] coordinates) {
+        this.coordinates = coordinates;
     }
 }
