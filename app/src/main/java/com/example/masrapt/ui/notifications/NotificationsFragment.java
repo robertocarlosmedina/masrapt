@@ -78,9 +78,9 @@ public class NotificationsFragment extends Fragment {
                 RouteJSONResponse jsonResponse = response.body();
 
                 routesList = new ArrayList<Route>(Arrays.asList(jsonResponse.getRoutes()));
-                System.out.print(routesList);
+                // System.out.print(routesList);
                 for (Route route: routesList) {
-                    System.out.println(route.getId());
+                    // System.out.println(route.getId());
                     routesList_recycl.add(new RouteDescription(route.getName(), route.getLocations(),
                             String.valueOf(route.getActive_bus())+ " active",
                             String.valueOf(route.getRoute_timer())+" mn"));

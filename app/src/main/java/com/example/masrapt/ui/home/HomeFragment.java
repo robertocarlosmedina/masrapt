@@ -64,6 +64,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
     private int REQUEST_CODE = 111;
 
     private ArrayList<Route> routesList;
+    private ArrayList<Bus> busList;
     private ArrayList<RouteDescription> routesList_recycl;
     private ArrayList<RouteCoordinate> routeCoordinates;
     private ArrayList<ArrayList<RouteCoordinate>> all_routesCoordinates;
@@ -80,21 +81,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
         routesList_recycl = new ArrayList<>();
         routeCoordinates = new ArrayList<>();
         all_routesCoordinates = new ArrayList<>();
+        busList = new ArrayList<>();
 
         client_location = LocationServices.getFusedLocationProviderClient(getActivity());
 
         //getRoutesInfo();
+        // getCurrentLocation();
 
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            // getCurrentLocation();
-        }
-        else {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
-        }
-
-
-        
         return homeViewModel;
     }
 
@@ -102,9 +95,55 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
     public void onStart() {
         super.onStart();
         coordenates = (TextView) getActivity().findViewById(R.id.test_display);
-        coordenates.setText("");
+        coordenates.setText("okok");
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            // getCurrentLocation();
+        }
+        else {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+        }
         // getRoutesInfo();
     }
+
+    private void getAllBusInfo() {
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.api_base_url))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        BusAPIRoutes busAPIRoutes = retrofit.create(BusAPIRoutes.class);
+        Call<BusJSONResponse> call = busAPIRoutes.getBus();
+
+        call.enqueue(new Callback<BusJSONResponse>() {
+            @Override
+            public void onResponse(Call<BusJSONResponse> call, Response<BusJSONResponse> response) {
+                String text;
+                Toast.makeText(getActivity(), "Getting bus info", Toast.LENGTH_SHORT).show();
+                BusJSONResponse jsonResponse = response.body();
+                busList = new ArrayList<Bus>(Arrays.asList(jsonResponse.getBus()));
+                text = "";
+                for (Bus bus: busList) {
+                    text +=  "\n" +
+                            "\tid: "+bus.getId()+
+                            "\tcurrent_sequence_nr: "+bus.getCurrent_sequence_number()+
+                            "\tlongitude: "+bus.getLongitude()+
+                            "\tlatitude: "+bus.getLatitude()+
+                            "\tstate: "+bus.getState()+
+                            "\tid_route: "+bus.getId_route();
+                }
+                displayAllBusOnMap();
+                // coordenates.setText(text);
+                coordenates.setText("");
+            }
+
+            @Override
+            public void onFailure(Call<BusJSONResponse> call, Throwable t) {
+                Toast.makeText(getActivity(), "Error while updating bus info", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         gMap = googleMap;
@@ -113,9 +152,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
         Coordinates coordinates = new Coordinates();
 
         LatLng mindelo = new LatLng(16.886326,-24.986950);
-        gMap.addMarker(new MarkerOptions()
-                .position(mindelo)
-                .title("Marker in mindelo"));
+        //gMap.addMarker(new MarkerOptions()
+                // .position(mindelo)
+                // .title("Marker in mindelo"));
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mindelo, 15));
 
         route_polygon = new PolygonOptions()
@@ -133,6 +172,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
                 .strokeColor(coordinates.getColor_route_3());
         polygon = gMap.addPolygon(route_polygon);
 
+        getAllBusInfo();
+        
         // getRoutesInfo();
 
         /*
@@ -181,7 +222,16 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
         */
     }
 
+    private void displayAllBusOnMap() {
+        for(Bus bus: busList){
+            gMap.addMarker(new MarkerOptions()
+                .position(new LatLng(bus.getLongitude(), bus.getLatitude()))
+                .title("Marker of the bus"));
+        }
+    }
+
     public void getCurrentLocation() {
+        coordenates.setText("geting location");
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             coordenates.setText(" Don't have location");
             return;
@@ -191,21 +241,21 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback{
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
+                coordenates.setText("oN sucess message");
                 if (location != null) {
                     current_location = location;
-                    mapFragment.getMapAsync(new OnMapReadyCallback() {
-                        @Override
-                        public void onMapReady(@NonNull GoogleMap googleMap) {
+                    //mapFragment.getMapAsync(new OnMapReadyCallback() {
+                        //@Override
+                        //public void onMapReady(@NonNull GoogleMap googleMap) {
                             LatLng latlng = new LatLng(current_location.getLatitude(), current_location.getLongitude());
                             //LatLng latlng = new LatLng(16.89, -24.98);
                             coordenates.setText("alt: "+current_location.getLatitude()+" log: "+current_location.getLongitude());
-                            MarkerOptions markerOptions = new MarkerOptions().position(latlng).title("You are Here");
+                            // MarkerOptions markerOptions = new MarkerOptions().position(latlng).title("You are Here");
 
-                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 5));
+                            // googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 5));
 
-                            googleMap.addMarker(markerOptions).showInfoWindow();
-                        }
-                    });
+                            // googleMap.addMarker(markerOptions).showInfoWindow();
+                    //});
                 }
             }
         });
