@@ -18,6 +18,7 @@ public class Coordinates {
 
     private int color_route_1 = Color.BLUE;
     private int color_route_2 = Color.RED;
+    private int color_route_3 = Color.GREEN;
 
     public int getColor_route_1() {
         return color_route_1;
@@ -31,7 +32,6 @@ public class Coordinates {
         return color_route_3;
     }
 
-    private int color_route_3 = Color.GREEN;
 
     public Coordinates() {
         addCoordinateValueToRoute_1();

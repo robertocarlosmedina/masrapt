@@ -6,12 +6,10 @@
         android:icon="@drawable/ic_baseline_map_24"
         android:title="@string/title_home" />
 
-    <!--
     <item
         android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_baseline_my_location_24"
+        android:icon="@drawable/ic_baseline_directions_bus_24"
         android:title="@string/title_dashboard" />
-    -->
 
     <item
         android:id="@+id/navigation_notifications"

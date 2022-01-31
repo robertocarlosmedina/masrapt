@@ -9,6 +9,11 @@ public class Bus {
     private double latitude;
     private int state;
     private int id_route;
+    private String route_color;
+
+    public String getRoute_color() {
+        return route_color;
+    }
 
     public int getId() {
         return id;

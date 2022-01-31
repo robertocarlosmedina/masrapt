@@ -88,23 +88,5 @@
             app:layout_constraintTop_toTopOf="parent"
             app:navGraph="@navigation/mobile_navigation" />
 
-        <TextView
-            android:id="@+id/floating_selector"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="18dp"
-            android:background="@drawable/floating_controler"
-            android:elevation="6dp"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="10dp"
-            android:text="@string/current_route"
-            android:textSize="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/nav_view"
-            app:layout_constraintEnd_toEndOf="@+id/nav_host_fragment_activity_dashboard"
-            tools:ignore="MissingConstraints" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

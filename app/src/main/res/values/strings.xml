@@ -3,7 +3,7 @@
     <string name="api_base_url">http://192.168.88.175:3001/</string>
     <string name="title_activity_dashboard">Dashboard_activity</string>
     <string name="title_home">Map</string>
-    <string name="title_dashboard">My Location</string>
+    <string name="title_dashboard">Buses</string>
     <string name="title_notifications">Routes</string>
     <string name="intro_text">Never miss the bus whit us</string>
     <string name="login">Login</string>
@@ -23,7 +23,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="current_theme">System Default</string>
-    <string name="current_route">All</string>
+    <string name="current_route">All Routes</string>
     <string name="api_key">AIzaSyDZ6HCz1XHDcfRdDA_CE1KxSuIxqzLOv_A</string>
 
 </resources>
