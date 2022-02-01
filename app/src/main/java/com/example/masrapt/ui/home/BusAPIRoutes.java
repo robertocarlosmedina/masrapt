@@ -10,6 +10,9 @@ public interface BusAPIRoutes {
     @GET("/bus")
     Call<BusJSONResponse> getBus();
 
+    @GET("/bus/all_buses_stop")
+    Call<BusStopJSONResponse> getBusStop();
+
     // @GET("/bus/update_all_bus_position")
     // Call<BusJSONResponse> getBus();
 }

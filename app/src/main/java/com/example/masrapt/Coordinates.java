@@ -9,12 +9,16 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileReader;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Coordinates {
     private ArrayList<LatLng> lat_long_route_1 = new ArrayList<>();
     private ArrayList<LatLng> lat_long_route_2 = new ArrayList<>();
     private ArrayList<LatLng> lat_long_route_3 = new ArrayList<>();
+    private ArrayList<ArrayList<LatLng>> all_routes_coordinates = new ArrayList<>();
+    private ArrayList<Integer> color_array = new ArrayList<>();
+    private ArrayList<String> routes_names = new ArrayList<>();
 
     private int color_route_1 = Color.BLUE;
     private int color_route_2 = Color.RED;
@@ -37,6 +41,31 @@ public class Coordinates {
         addCoordinateValueToRoute_1();
         addCoordinateValueToRoute_2();
         addCoordinateValueToRoute_3();
+        makeAllRoutesCoordinatesList();
+    }
+
+    public ArrayList<ArrayList<LatLng>> getAll_routes_coordinates() {
+        return all_routes_coordinates;
+    }
+
+    public ArrayList<Integer> getColor_array() {
+        return color_array;
+    }
+
+    public ArrayList<String> getRoutes_names() {
+        return routes_names;
+    }
+
+    private void makeAllRoutesCoordinatesList() {
+        all_routes_coordinates.add(lat_long_route_1);
+        all_routes_coordinates.add(lat_long_route_2);
+        all_routes_coordinates.add(lat_long_route_3);
+        color_array.add(color_route_1);
+        color_array.add(color_route_2);
+        color_array.add(color_route_3);
+        routes_names.add("Route L1");
+        routes_names.add("Route L2");
+        routes_names.add("Route L3");
     }
 
     public ArrayList<LatLng> getLat_long_route_1() {

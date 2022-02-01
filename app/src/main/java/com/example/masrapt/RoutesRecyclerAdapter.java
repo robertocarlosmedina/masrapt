@@ -21,7 +21,7 @@ public class RoutesRecyclerAdapter extends RecyclerView.Adapter<RoutesRecyclerAd
         this.routesList = routesList;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder{
         private TextView route_name, route_places, active_bus, timer;
 
         public MyViewHolder(@NonNull View itemView) {

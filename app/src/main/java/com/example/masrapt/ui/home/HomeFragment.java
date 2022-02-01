@@ -1,6 +1,7 @@
 package com.example.masrapt.ui.home;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -12,16 +13,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.masrapt.Coordinates;
+import com.example.masrapt.Dashboard_activity;
 import com.example.masrapt.R;
 import com.example.masrapt.RouteDescription;
 import com.example.masrapt.databinding.FragmentHomeBinding;
@@ -45,6 +49,7 @@ import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,27 +61,32 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
     private View homeViewModel;
     private GoogleMap gMap;
-    private TextView coordenates, map_type;
+    private TextView coordinates, map_type, floating_selector;
+    private Dialog route_selector_dialog;
     private FragmentHomeBinding binding;
     private Location current_location;
-    private ArrayList<LatLng> lat_long = new ArrayList<>();
     private SupportMapFragment mapFragment;
+    private ArrayList<CardView> routes_choice_buttons = new ArrayList<>();
     private FusedLocationProviderClient client_location;
     private int REQUEST_CODE = 111;
 
-    private ArrayList<Route> routesList;
     private ArrayList<Bus> busList;
     private ArrayList<RouteDescription> routesList_recycl;
-    private ArrayList<RouteCoordinate> routeCoordinates;
-    private ArrayList<ArrayList<RouteCoordinate>> all_routesCoordinates;
+    private ArrayList<BusStop> all_buses_stops = new ArrayList<>();
 
+    /**
+     * Class Runnable that will execute some Bus
+     * background tasks. Each 6 secs this background task
+     * will call the getAllBusInfo method, what will update the
+     * buses positions on the map.
+     * */
     public class BusTracking implements Runnable {
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void run() {
             try {
                 synchronized (this) {
-                    wait(6000);
+                    wait(5000);
                     if (getActivity() != null) {
                         getActivity().runOnUiThread(new Runnable() {
                             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -101,20 +111,19 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 R.id.google_maps);
         mapFragment.getMapAsync(this);
 
-        routesList = new ArrayList<>();
         routesList_recycl = new ArrayList<>();
-        routeCoordinates = new ArrayList<>();
-        all_routesCoordinates = new ArrayList<>();
         busList = new ArrayList<>();
 
         client_location = LocationServices.getFusedLocationProviderClient(getActivity());
 
-        //getRoutesInfo();
         // getCurrentLocation();
 
         return homeViewModel;
     }
 
+    /**
+     * Method that handle the map type changing
+     * */
     private void changeMapType() {
         String current_type = map_type.getText().toString();
         if (current_type.equals("Satellite")){
@@ -130,14 +139,37 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onStart() {
         super.onStart();
-        coordenates = (TextView) getActivity().findViewById(R.id.test_display);
-        coordenates.setText("okok");
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             // getCurrentLocation();
         } else {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
         }
+
+        // Dialog to select route to display
+        route_selector_dialog = new Dialog(getActivity());
+        route_selector_dialog.setContentView(R.layout.select_route_dialog);
+        route_selector_dialog.getWindow().setBackgroundDrawable(getActivity().getDrawable(R.drawable.dialog_bg));
+        route_selector_dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        route_selector_dialog.setCancelable(true);
+
+        floating_selector = (TextView) getActivity().findViewById(R.id.floating_selector);
+        floating_selector.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                route_selector_dialog.show();
+            }
+        });
+
+        handleRouteSwitchDisplay();
+
+        ImageView close_icon = (ImageView) route_selector_dialog.findViewById(R.id.close_icon);
+        close_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                close_dialog();
+            }
+        });
         map_type = (TextView) getActivity().findViewById(R.id.map_type);
         map_type.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,11 +178,117 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             }
         });
         getAllBusInfo();
-        // getRoutesInfo();
+        getAllBusStops();
     }
 
-    private void getAllBusInfo() {
+    /**
+     * Method to handle the route selector cardView onCLick event
+     * */
+    private void handleRouteSwitchDisplay() {
+        routes_choice_buttons.add(route_selector_dialog.findViewById(R.id.all_routes));
+        routes_choice_buttons.add(route_selector_dialog.findViewById(R.id.route_1));
+        routes_choice_buttons.add(route_selector_dialog.findViewById(R.id.route_2));
+        routes_choice_buttons.add(route_selector_dialog.findViewById(R.id.route_3));
 
+        for (CardView cardView: routes_choice_buttons){
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String text = cardView.toString().split("/")[1];
+                    text = text.substring(0, text.length()-1);
+                    updateFloatingSelectorValue(text);
+                }
+            });
+        }
+    }
+    /**
+     * Method to Update the FLoading selector value
+     * @param text
+     * */
+    private void updateFloatingSelectorValue(String text) {
+        if (text.equals("all_routes")){
+            floating_selector.setText("All Routes");
+        }
+        else if (text.equals("route_1")){
+            floating_selector.setText("Route L1");
+        }
+        else if (text.equals("route_2")){
+            floating_selector.setText("Route L2");
+        }
+        else if (text.equals("route_3")){
+            floating_selector.setText("Route L3");
+        }
+        route_selector_dialog.hide();
+        displayAllBusOnMap();
+    }
+
+    private void close_dialog() {
+        route_selector_dialog.hide();
+    }
+
+    /**
+     * Method to get all the Buses stop from the API
+     * */
+    private void getAllBusStops(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.api_base_url))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        BusAPIRoutes busAPIRoutes = retrofit.create(BusAPIRoutes.class);
+        Call<BusStopJSONResponse> call = busAPIRoutes.getBusStop();
+
+        call.enqueue(new Callback<BusStopJSONResponse>() {
+            @Override
+            public void onResponse(Call<BusStopJSONResponse> call, Response<BusStopJSONResponse> response) {
+                BusStopJSONResponse jsonResponse = response.body();
+                all_buses_stops = new ArrayList<BusStop>(Arrays.asList(jsonResponse.getBusStop()));
+                displayBusesStopsOnMap();
+            }
+
+            @Override
+            public void onFailure(Call<BusStopJSONResponse> call, Throwable t) {
+                Toast.makeText(getActivity(), "Error while updating bus info", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /**
+     * Method to display all the buses stop on the maps
+     * */
+    private void displayBusesStopsOnMap() {
+        ArrayList<BitmapDescriptor> bitmapDescriptors = new ArrayList<>();
+
+        for (BusStop busStop: all_buses_stops){
+            bitmapDescriptors.add(bitmapDescriptorFromVector(R.drawable.ic_baseline_brightness_blue_1_24));
+        }
+        if(floating_selector.getText().equals("All Routes")){
+            for (int i = 0; i < all_buses_stops.size(); i++) {
+                gMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(all_buses_stops.get(i).getLongitude(), all_buses_stops.get(i).getLatitude()))
+                        .icon(bitmapDescriptors.get(i))
+                        .title("Bus Stop")
+                        .snippet("Bus Stop")
+                );
+            }
+        }
+        else{
+            for (int i = 0; i < all_buses_stops.size(); i++) {
+                if(floating_selector.getText().equals(all_buses_stops.get(i).getRoute_name())){
+                    gMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(all_buses_stops.get(i).getLongitude(), all_buses_stops.get(i).getLatitude()))
+                            .icon(bitmapDescriptors.get(i))
+                            .title("Bus Stop")
+                            .snippet("Bus Stop")
+                    );
+                }
+            }
+        }
+    }
+
+    /**
+     * Method to get all the buses info
+     * */
+    private void getAllBusInfo() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.api_base_url))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -162,27 +300,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onResponse(Call<BusJSONResponse> call, Response<BusJSONResponse> response) {
-                // String text;
                 BusJSONResponse jsonResponse = response.body();
                 busList = new ArrayList<Bus>(Arrays.asList(jsonResponse.getBus()));
-                /*
-                text = "";
-                for (Bus bus : busList) {
-                    text += "\n" +
-                            "\tid: " + bus.getId() +
-                            "\tcurrent_sequence_nr: " + bus.getCurrent_sequence_number() +
-                            "\tlongitude: " + bus.getLongitude() +
-                            "\tlatitude: " + bus.getLatitude() +
-                            "\tstate: " + bus.getState() +
-                            "\tid_route: " + bus.getId_route();
-                }
-                */
                 displayAllBusOnMap();
                 BusTracking busTracking = new BusTracking();
                 Thread t1 = new Thread(busTracking);
                 t1.start();
-                // coordenates.setText(text);
-                // coordenates.setText("");
             }
 
             @Override
@@ -201,14 +324,36 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mindelo, 15));
 
         drawRoutesPolygon();
-
-        // getRoutesInfo();
     }
 
+    /**
+     * Method to display all the routes polygons on the map
+     * */
     private void drawRoutesPolygon() {
         Polygon polygon;
         PolygonOptions route_polygon;
         Coordinates coordinates = new Coordinates();
+
+        if(floating_selector.getText().equals("All Routes")){
+            for(int i = 0; i < coordinates.getAll_routes_coordinates().size(); i++){
+                route_polygon = new PolygonOptions()
+                        .addAll(coordinates.getAll_routes_coordinates().get(i))
+                        .strokeColor(coordinates.getColor_array().get(i));
+                polygon = gMap.addPolygon(route_polygon);
+            }
+        }
+        else{
+            for(int i = 0; i < coordinates.getAll_routes_coordinates().size(); i++){
+                if(floating_selector.getText().equals(coordinates.getRoutes_names().get(i))){
+                    route_polygon = new PolygonOptions()
+                            .addAll(coordinates.getAll_routes_coordinates().get(i))
+                            .strokeColor(coordinates.getColor_array().get(i));
+                    polygon = gMap.addPolygon(route_polygon);
+                }
+            }
+        }
+
+/*
         route_polygon = new PolygonOptions()
                 .addAll(coordinates.getLat_long_route_1())
                 .strokeColor(coordinates.getColor_route_1());
@@ -223,8 +368,15 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 .addAll(coordinates.getLat_long_route_3())
                 .strokeColor(coordinates.getColor_route_3());
         polygon = gMap.addPolygon(route_polygon);
+
+ */
     }
 
+    /**
+     * Method to convert vector assets into BitmapDescriptor objects
+     * @param vectorResId
+     * @return BitmapDescriptor
+     * */
     private BitmapDescriptor bitmapDescriptorFromVector(int vectorResId) {
         Drawable vectorDrawable = ContextCompat.getDrawable(getActivity(), vectorResId);
         vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
@@ -234,6 +386,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
+    /**
+     * Method to display all the buses on the map
+     * */
     private void displayAllBusOnMap() {
         ArrayList<BitmapDescriptor> bitmapDescriptors = new ArrayList<>();
 
@@ -250,21 +405,39 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
         gMap.clear();
         drawRoutesPolygon();
+        displayBusesStopsOnMap();
 
-        for (int i = 0; i < busList.size(); i++) {
-            gMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(busList.get(i).getLongitude(), busList.get(i).getLatitude()))
-                    .icon(bitmapDescriptors.get(i))
-                    .title("Marker of the bus")
-                    .snippet("fwejfnjwef fjwe fwekj ")
-            );
+        if(floating_selector.getText().equals("All Routes")){
+            for (int i = 0; i < busList.size(); i++) {
+                gMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(busList.get(i).getLongitude(), busList.get(i).getLatitude()))
+                        .icon(bitmapDescriptors.get(i))
+                        .title(busList.get(i).getRegistration_plate().toString())
+                        .snippet(busList.get(i).getPassengers_number() + " Passengers on board")
+                );
+            }
+        }
+        else{
+            for (int i = 0; i < busList.size(); i++) {
+                if(floating_selector.getText().equals(busList.get(i).getRoute_name())){
+                    gMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(busList.get(i).getLongitude(), busList.get(i).getLatitude()))
+                            .icon(bitmapDescriptors.get(i))
+                            .title(busList.get(i).getRegistration_plate().toString())
+                            .snippet(busList.get(i).getPassengers_number() + " Passengers on board")
+                    );
+                }
+            }
         }
     }
 
+    /**
+     * Method to get user current location
+     * */
     public void getCurrentLocation() {
-        coordenates.setText("geting location");
+        coordinates.setText("geting location");
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            coordenates.setText(" Don't have location");
+            coordinates.setText(" Don't have location");
             return;
         }
         Task<Location> task = client_location.getLastLocation();
@@ -272,7 +445,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                coordenates.setText("oN sucess message");
+                coordinates.setText("oN sucess message");
                 if (location != null) {
                     current_location = location;
                     //mapFragment.getMapAsync(new OnMapReadyCallback() {
@@ -280,7 +453,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                     //public void onMapReady(@NonNull GoogleMap googleMap) {
                     LatLng latlng = new LatLng(current_location.getLatitude(), current_location.getLongitude());
                     //LatLng latlng = new LatLng(16.89, -24.98);
-                    coordenates.setText("alt: " + current_location.getLatitude() + " log: " + current_location.getLongitude());
+                    coordinates.setText("alt: " + current_location.getLatitude() + " log: " + current_location.getLongitude());
                     // MarkerOptions markerOptions = new MarkerOptions().position(latlng).title("You are Here");
 
                     // googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 5));
@@ -290,100 +463,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 }
             }
         });
-    }
-
-    private void getRoutesInfo() {
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.api_base_url))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        RoutesAPIRoutes routesAPIRoutes = retrofit.create(RoutesAPIRoutes.class);
-
-        Call<RouteJSONResponse> call = routesAPIRoutes.getRoutes();
-
-        call.enqueue(new Callback<RouteJSONResponse>() {
-            @Override
-            public void onResponse(Call<RouteJSONResponse> call, Response<RouteJSONResponse> response) {
-                RouteJSONResponse jsonResponse = response.body();
-
-                routesList = new ArrayList<Route>(Arrays.asList(jsonResponse.getRoutes()));
-                String text = "";
-                for (Route route : routesList) {
-                    getRoutesCoordinates((int) route.getId());
-                    text = text + " " + route.getName() + " ";
-                }
-                coordenates.setText(text);
-
-            }
-
-            @Override
-            public void onFailure(Call<RouteJSONResponse> call, Throwable t) {
-
-            }
-        });
-    }
-
-    private void getRoutesCoordinates(int id_route) {
-
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.api_base_url))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        CoordinatesAPIRoutes coordinatesAPIRoutes = retrofit.create(
-                CoordinatesAPIRoutes.class
-        );
-
-        Call<RouteCoordinatesJSONResponse> call = coordinatesAPIRoutes.getRoutesCoordinates(id_route);
-
-        call.enqueue(new Callback<RouteCoordinatesJSONResponse>() {
-            @Override
-            public void onResponse(Call<RouteCoordinatesJSONResponse> call, Response<RouteCoordinatesJSONResponse> response) {
-                RouteCoordinatesJSONResponse jsonResponse = response.body();
-
-                routeCoordinates = new ArrayList<RouteCoordinate>(Arrays.asList(jsonResponse.getCoordinates()));
-                all_routesCoordinates.add(routeCoordinates);
-                String text = "";
-                for (RouteCoordinate route : routeCoordinates) {
-                    text = text + " " + route.getId_route() + " ";
-                }
-                // updateRoutesOnMap();
-                coordenates.setText(text);
-            }
-
-            @Override
-            public void onFailure(Call<RouteCoordinatesJSONResponse> call, Throwable t) {
-
-            }
-        });
-
-
-    }
-
-    public void updateRoutesOnMap() {
-        LatLng coordinates;
-        String text = "routes: ";
-        PolygonOptions route_polygon;
-        Toast.makeText(getActivity(), "Updating routes " + all_routesCoordinates.size(), Toast.LENGTH_SHORT).show();
-        for (ArrayList<RouteCoordinate> arrayList : all_routesCoordinates) {
-            Toast.makeText(getActivity(), "Starting list ", Toast.LENGTH_SHORT).show();
-            coordinates = null;
-            text = text + "   !  ";
-            lat_long.clear();
-            for (RouteCoordinate routeCoordinate : arrayList) {
-                Toast.makeText(getActivity(), "Adding coordenates " + routeCoordinate.getId_route(), Toast.LENGTH_SHORT).show();
-                coordinates = new LatLng(routeCoordinate.getLatitude(), routeCoordinate.getLongitude());
-                lat_long.add(coordinates);
-                text = text + " " + routeCoordinate.getId_coordinates() + " ";
-            }
-            route_polygon = new PolygonOptions()
-                    .addAll(lat_long)
-                    .strokeColor(Color.BLUE);
-            Polygon polygon = gMap.addPolygon(route_polygon);
-            coordenates.setText(text);
-        }
     }
 
     @Override

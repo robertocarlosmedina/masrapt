@@ -1,6 +1,6 @@
 package com.example.masrapt.ui.home;
 
-public class Bus {
+public class BusDescription {
 
     private int id;
     private String registration_plate;
@@ -11,15 +11,25 @@ public class Bus {
     private int id_route;
     private String route_color;
     private int in_a_bus_stop;
-    private int passengers_number;
+    private String passengers_number;
     private String route_name;
-    private int total_seats;
+    private String total_seats;
+
+
+    public BusDescription(String registration_plate, String passengers_number, String route_name,
+                          String total_seats, String route_color) {
+        this.registration_plate = registration_plate;
+        this.passengers_number = passengers_number;
+        this.route_name = route_name;
+        this.total_seats = total_seats;
+        this.route_color = route_color;
+    }
 
     public String getRoute_name() {
         return route_name;
     }
 
-    public int getPassengers_number() {
+    public String getPassengers_number() {
         return passengers_number;
     }
 
@@ -27,7 +37,7 @@ public class Bus {
         return in_a_bus_stop;
     }
 
-    public int getTotal_seats() {
+    public String getTotal_seats() {
         return total_seats;
     }
 

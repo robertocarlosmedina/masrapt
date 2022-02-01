@@ -53,6 +53,9 @@ public class NotificationsFragment extends Fragment {
         return root;
     }
 
+    /**
+     * Method to set the routes Recycler view adapter
+     * */
     private void setRouteAdapter(){
         RoutesRecyclerAdapter route_adapter = new RoutesRecyclerAdapter(routesList_recycl);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
@@ -61,32 +64,27 @@ public class NotificationsFragment extends Fragment {
         recyclerView.setAdapter(route_adapter);
     }
 
+    /**
+     * Method that connect to the API and get all the routes info
+     * */
     private void setRoutesInfo() {
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.api_base_url))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
         RoutesAPIRoutes routesAPIRoutes = retrofit.create(RoutesAPIRoutes.class);
-
         Call<RouteJSONResponse> call = routesAPIRoutes.getRoutes();
-
         call.enqueue(new Callback<RouteJSONResponse>() {
             @Override
             public void onResponse(Call<RouteJSONResponse> call, Response<RouteJSONResponse> response) {
                 RouteJSONResponse jsonResponse = response.body();
-
                 routesList = new ArrayList<Route>(Arrays.asList(jsonResponse.getRoutes()));
-                // System.out.print(routesList);
                 for (Route route: routesList) {
-                    // System.out.println(route.getId());
                     routesList_recycl.add(new RouteDescription(route.getName(), route.getLocations(),
                             String.valueOf(route.getActive_bus())+ " active",
                             String.valueOf(route.getRoute_timer())+" mn"));
-                    setRouteAdapter();
                 }
-
+                setRouteAdapter();
             }
 
             @Override
