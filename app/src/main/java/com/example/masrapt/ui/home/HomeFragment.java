@@ -62,6 +62,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private View homeViewModel;
     private GoogleMap gMap;
     private TextView coordinates, map_type, floating_selector;
+    private ImageView my_location_icon;
     private Dialog route_selector_dialog;
     private FragmentHomeBinding binding;
     private Location current_location;
@@ -73,6 +74,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private ArrayList<Bus> busList;
     private ArrayList<RouteDescription> routesList_recycl;
     private ArrayList<BusStop> all_buses_stops = new ArrayList<>();
+    private LatLng my_location;
+    private Boolean showLocation = false;
 
     /**
      * Class Runnable that will execute some Bus
@@ -114,8 +117,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         routesList_recycl = new ArrayList<>();
         busList = new ArrayList<>();
 
-        client_location = LocationServices.getFusedLocationProviderClient(getActivity());
-
         // getCurrentLocation();
 
         return homeViewModel;
@@ -126,11 +127,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
      * */
     private void changeMapType() {
         String current_type = map_type.getText().toString();
-        if (current_type.equals("Satellite")){
+        if (current_type.equals("Satellite")) {
             gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
             map_type.setText("Normal");
-        }
-        else{
+        } else {
             gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
             map_type.setText("Satellite");
         }
@@ -138,6 +138,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onStart() {
+        coordinates = (TextView) getActivity().findViewById(R.id.test_display);
         super.onStart();
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -158,6 +159,14 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
                 route_selector_dialog.show();
+            }
+        });
+
+        my_location_icon = (ImageView) getActivity().findViewById(R.id.my_location);
+        my_location_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleShowHideLocation();
             }
         });
 
@@ -190,32 +199,30 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         routes_choice_buttons.add(route_selector_dialog.findViewById(R.id.route_2));
         routes_choice_buttons.add(route_selector_dialog.findViewById(R.id.route_3));
 
-        for (CardView cardView: routes_choice_buttons){
+        for (CardView cardView : routes_choice_buttons) {
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String text = cardView.toString().split("/")[1];
-                    text = text.substring(0, text.length()-1);
+                    text = text.substring(0, text.length() - 1);
                     updateFloatingSelectorValue(text);
                 }
             });
         }
     }
+
     /**
      * Method to Update the FLoading selector value
      * @param text
      * */
     private void updateFloatingSelectorValue(String text) {
-        if (text.equals("all_routes")){
+        if (text.equals("all_routes")) {
             floating_selector.setText("All Routes");
-        }
-        else if (text.equals("route_1")){
+        } else if (text.equals("route_1")) {
             floating_selector.setText("Route L1");
-        }
-        else if (text.equals("route_2")){
+        } else if (text.equals("route_2")) {
             floating_selector.setText("Route L2");
-        }
-        else if (text.equals("route_3")){
+        } else if (text.equals("route_3")) {
             floating_selector.setText("Route L3");
         }
         route_selector_dialog.hide();
@@ -229,7 +236,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     /**
      * Method to get all the Buses stop from the API
      * */
-    private void getAllBusStops(){
+    private void getAllBusStops() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.api_base_url))
                 .addConverterFactory(GsonConverterFactory.create())
@@ -258,27 +265,26 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private void displayBusesStopsOnMap() {
         ArrayList<BitmapDescriptor> bitmapDescriptors = new ArrayList<>();
 
-        for (BusStop busStop: all_buses_stops){
+        for (BusStop busStop : all_buses_stops) {
             bitmapDescriptors.add(bitmapDescriptorFromVector(R.drawable.ic_baseline_brightness_blue_1_24));
         }
-        if(floating_selector.getText().equals("All Routes")){
+        if (floating_selector.getText().equals("All Routes")) {
             for (int i = 0; i < all_buses_stops.size(); i++) {
                 gMap.addMarker(new MarkerOptions()
                         .position(new LatLng(all_buses_stops.get(i).getLongitude(), all_buses_stops.get(i).getLatitude()))
                         .icon(bitmapDescriptors.get(i))
-                        .title("Bus Stop")
-                        .snippet("Bus Stop")
+                        .title("Bus Stop: " + all_buses_stops.get(i).getRoute_name())
+                        .snippet(all_buses_stops.get(i).getBus_stop_name())
                 );
             }
-        }
-        else{
+        } else {
             for (int i = 0; i < all_buses_stops.size(); i++) {
-                if(floating_selector.getText().equals(all_buses_stops.get(i).getRoute_name())){
+                if (floating_selector.getText().equals(all_buses_stops.get(i).getRoute_name())) {
                     gMap.addMarker(new MarkerOptions()
                             .position(new LatLng(all_buses_stops.get(i).getLongitude(), all_buses_stops.get(i).getLatitude()))
                             .icon(bitmapDescriptors.get(i))
-                            .title("Bus Stop")
-                            .snippet("Bus Stop")
+                            .title("Bus Stop: " + all_buses_stops.get(i).getRoute_name())
+                            .snippet(all_buses_stops.get(i).getBus_stop_name())
                     );
                 }
             }
@@ -313,6 +319,30 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 Toast.makeText(getActivity(), "Error while updating bus info", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    /**
+     * Method to handle the show hide location buttons clicks
+     * */
+    private void handleShowHideLocation() {
+        showLocation = !showLocation;
+        if (showLocation) {
+            getCurrentLocation();
+        } else {
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
+            gMap.setMyLocationEnabled(false);
+        }
     }
 
     @Override
@@ -352,24 +382,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 }
             }
         }
-
-/*
-        route_polygon = new PolygonOptions()
-                .addAll(coordinates.getLat_long_route_1())
-                .strokeColor(coordinates.getColor_route_1());
-        polygon = gMap.addPolygon(route_polygon);
-
-        route_polygon = new PolygonOptions()
-                .addAll(coordinates.getLat_long_route_2())
-                .strokeColor(coordinates.getColor_route_2());
-        polygon = gMap.addPolygon(route_polygon);
-
-        route_polygon = new PolygonOptions()
-                .addAll(coordinates.getLat_long_route_3())
-                .strokeColor(coordinates.getColor_route_3());
-        polygon = gMap.addPolygon(route_polygon);
-
- */
+        if(my_location != null && showLocation){
+            gMap.addMarker(new MarkerOptions()
+                    .position(my_location)
+                    .title("My location")
+            );
+        }
     }
 
     /**
@@ -413,7 +431,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                         .position(new LatLng(busList.get(i).getLongitude(), busList.get(i).getLatitude()))
                         .icon(bitmapDescriptors.get(i))
                         .title(busList.get(i).getRegistration_plate().toString())
-                        .snippet(busList.get(i).getPassengers_number() + " Passengers on board")
+                        .snippet(busList.get(i).getTotal_seats() - busList.get(i).getPassengers_number()
+                                + " available seats")
                 );
             }
         }
@@ -435,34 +454,41 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
      * Method to get user current location
      * */
     public void getCurrentLocation() {
-        coordinates.setText("geting location");
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            coordinates.setText(" Don't have location");
+
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            }
             return;
         }
-        Task<Location> task = client_location.getLastLocation();
-
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                coordinates.setText("oN sucess message");
-                if (location != null) {
-                    current_location = location;
-                    //mapFragment.getMapAsync(new OnMapReadyCallback() {
-                    //@Override
-                    //public void onMapReady(@NonNull GoogleMap googleMap) {
-                    LatLng latlng = new LatLng(current_location.getLatitude(), current_location.getLongitude());
-                    //LatLng latlng = new LatLng(16.89, -24.98);
-                    coordinates.setText("alt: " + current_location.getLatitude() + " log: " + current_location.getLongitude());
-                    // MarkerOptions markerOptions = new MarkerOptions().position(latlng).title("You are Here");
-
-                    // googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latlng, 5));
-
-                    // googleMap.addMarker(markerOptions).showInfoWindow();
-                    //});
+        else{
+            client_location = LocationServices.getFusedLocationProviderClient(getActivity());
+            Task<Location> task = client_location.getLastLocation();
+            task.addOnSuccessListener(new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    if (location != null) {
+                        current_location = location;
+                        my_location = new LatLng(current_location.getLatitude(),
+                                current_location.getLongitude());
+                        gMap.addMarker(new MarkerOptions()
+                                .position(my_location)
+                                .title("My location")
+                        );
+                        gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(my_location, 16));
+                    }
                 }
-            }
-        });
+            });
+            gMap.setMyLocationEnabled(true);
+        }
     }
 
     @Override
