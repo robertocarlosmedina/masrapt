@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bus_stop"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:paddingBottom="30dp"
+    app:cardCornerRadius="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorSecondary"
+        android:elevation="5dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="0dp"
+            android:textAlignment="textStart">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:textAlignment="textStart">
+
+                <TextView
+                    android:id="@+id/route_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:elevation="6dp"
+                    android:gravity="center"
+                    android:text="Route L1"
+                    android:textSize="@dimen/route_name_font_size"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@id/inform"
+                    app:layout_constraintTop_toTopOf="@id/inform" />
+
+                <TextView
+                    android:id="@+id/route_places"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_row="0"
+                    android:layout_column="0"
+                    android:elevation="6dp"
+                    android:text="Maderalzinho - Cruz - Bela Vista"
+                    android:textAlignment="textStart"
+                    android:textSize="@dimen/routes_place_font_size"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@id/route_name"
+                    app:layout_constraintTop_toTopOf="@id/route_name" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/get_notified_button"
+                style="@style/Buttom_min"
+                android:layout_width="120dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="12dp"
+                android:text="Be Notified"
+                android:textSize="12dp"
+                app:layout_constraintEnd_toEndOf="@id/bus_stop"
+                app:layout_constraintTop_toTopOf="@id/bus_stop" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

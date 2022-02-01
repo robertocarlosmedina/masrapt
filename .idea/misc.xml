@@ -32,6 +32,7 @@
         <entry key="app/src/main/res/drawable/btn_google_facebook.xml" value="0.1115" />
         <entry key="app/src/main/res/drawable/btn_whats_discord.xml" value="0.10520833333333333" />
         <entry key="app/src/main/res/drawable/buttom.xml" value="0.209375" />
+        <entry key="app/src/main/res/drawable/buttom_min.xml" value="0.135" />
         <entry key="app/src/main/res/drawable/container_componentes_menu.xml" value="0.134375" />
         <entry key="app/src/main/res/drawable/container_componetes.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/dialog_bg.xml" value="0.209375" />
@@ -67,7 +68,9 @@
         <entry key="app/src/main/res/layout/activity_tela_login.xml" value="0.2" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/bus_information_items.xml" value="0.23777173913043478" />
+        <entry key="app/src/main/res/layout/bus_stops_desc_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/delete_account_confirmation_dialog.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_bus_stops.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.16831683168316833" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.13145539906103287" />

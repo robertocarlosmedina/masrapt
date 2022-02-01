@@ -7,6 +7,11 @@ public class BusStop {
     private String route_color;
     private String bus_stop_name;
     private int sequence_number;
+    private String locations;
+
+    public String getLocations() {
+        return locations;
+    }
 
     public String getBus_stop_name() {
         return bus_stop_name;

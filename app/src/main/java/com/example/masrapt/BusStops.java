@@ -3,10 +3,27 @@ package com.example.masrapt;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.example.masrapt.ui.home.BusAPIRoutes;
+import com.example.masrapt.ui.home.BusStop;
+import com.example.masrapt.ui.home.BusStopJSONResponse;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +40,8 @@ public class BusStops extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private ArrayList<BusStop> all_buses_stops = new ArrayList<>();
+    private RecyclerView recyclerView;
 
     public BusStops() {
         // Required empty public constructor
@@ -53,6 +72,48 @@ public class BusStops extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        recyclerView = (RecyclerView) getActivity().findViewById(R.id.bus_stops_recycler_view);
+        setBusStopsAdapterInfo();
+        getAllBusStops();
+    }
+
+    private void setBusStopsAdapterInfo() {
+        BusStopsRecyclerAdapter route_adapter = new BusStopsRecyclerAdapter(all_buses_stops);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(route_adapter);
+    }
+
+    /**
+     * Method to get all the Buses stop from the API
+     * */
+    private void getAllBusStops() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.api_base_url))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        BusAPIRoutes busAPIRoutes = retrofit.create(BusAPIRoutes.class);
+        Call<BusStopJSONResponse> call = busAPIRoutes.getBusStop();
+
+        call.enqueue(new Callback<BusStopJSONResponse>() {
+            @Override
+            public void onResponse(Call<BusStopJSONResponse> call, Response<BusStopJSONResponse> response) {
+                BusStopJSONResponse jsonResponse = response.body();
+                all_buses_stops = new ArrayList<BusStop>(Arrays.asList(jsonResponse.getBusStop()));
+                setBusStopsAdapterInfo();
+            }
+
+            @Override
+            public void onFailure(Call<BusStopJSONResponse> call, Throwable t) {
+                Toast.makeText(getActivity(), "Error while updating bus info", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

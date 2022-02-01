@@ -443,7 +443,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                             .position(new LatLng(busList.get(i).getLongitude(), busList.get(i).getLatitude()))
                             .icon(bitmapDescriptors.get(i))
                             .title(busList.get(i).getRegistration_plate().toString())
-                            .snippet(busList.get(i).getPassengers_number() + " Passengers on board")
+                            .snippet(busList.get(i).getTotal_seats() - busList.get(i).getPassengers_number()
+                                    + " available seats")
                     );
                 }
             }
