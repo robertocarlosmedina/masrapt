@@ -1,5 +1,7 @@
 package com.example.masrapt;
 
+import static com.example.masrapt.Masrapt.CHANNEL_1_ID;
+
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -50,47 +52,37 @@ public class BusStopsRecyclerAdapter extends RecyclerView.Adapter<BusStopsRecycl
                 public void onClick(View v) {
                     Toast.makeText(itemView.getContext(), "Button: " + route_places.getText(),
                             Toast.LENGTH_LONG).show();
-                    createNotificationChanel();
-                    requestNotification("" + route_places.getText());
+                    requestNotification();
                 }
             });
         }
 
-        private void createNotificationChanel() {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                int importance = NotificationManager.IMPORTANCE_DEFAULT;
-                CharSequence name = "Simple Notification";
-
-                NotificationChannel notificationChannel = new NotificationChannel(
-                        "okgvdf df ", name, importance);
-                notificationChannel.setDescription("Text Notification");
-
-                NotificationManager notificationManager = (NotificationManager)
-                        itemView.getContext().getSystemService(itemView.getContext().NOTIFICATION_SERVICE);
-                notificationManager.createNotificationChannel(notificationChannel);
-            }
-        }
-
         @RequiresApi(api = Build.VERSION_CODES.M)
-        private void requestNotification(String bus_stop) {
+        private void requestNotification() {
+
             Intent dashboard_activity = new Intent(itemView.getContext(), Dashboard_activity.class);
             dashboard_activity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(itemView.getContext(),
                     0, dashboard_activity, 0);
 
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(itemView.getContext(),
-                    "okokok");
-            builder.setContentTitle("Bus Stop Alert");
-            builder.setContentText("Your bus is nearby " + bus_stop);
-            builder.setSmallIcon(IconCompat.createWithBitmap(BitmapFactory.decodeResource(itemView.getResources(), R.drawable.bus1)));
-            // Set the intent that will fire when the user taps the notification
-            builder.setContentIntent(pendingIntent);
-            builder.setAutoCancel(true);
-            builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
             NotificationManagerCompat managerCompat = NotificationManagerCompat.from(
                     itemView.getContext());
-            managerCompat.notify(1, builder.build());
+
+            Notification builder = new NotificationCompat.Builder(itemView.getContext(),
+                    CHANNEL_1_ID)
+                    .setSmallIcon(R.drawable.bus1)
+                    .setContentTitle("Bus Stop Alert")
+                    .setContentIntent(pendingIntent)
+                    .setContentText("Bus nearby " + route_places.getText())
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                    .build();
+            managerCompat.notify(1, builder);
+
+            Intent intent = new Intent(itemView.getContext(), BroadcastService.class);
+            intent.putExtra("route", route_name.getText());
+            intent.putExtra("bus_stop", route_places.getText());
+            itemView.getContext().startService(intent);
         }
     }
 
