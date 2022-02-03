@@ -72,10 +72,10 @@
         <entry key="app/src/main/res/layout/bus_information_items.xml" value="0.23777173913043478" />
         <entry key="app/src/main/res/layout/bus_stops_desc_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/delete_account_confirmation_dialog.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_bus_stops.xml" value="0.14" />
-        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.16831683168316833" />
+        <entry key="app/src/main/res/layout/fragment_bus_stops.xml" value="0.11043566362715299" />
+        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.13145539906103287" />
+        <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.11043566362715299" />
         <entry key="app/src/main/res/layout/header.xml" value="0.22" />
         <entry key="app/src/main/res/layout/route_des_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/select_route_dialog.xml" value="0.25" />

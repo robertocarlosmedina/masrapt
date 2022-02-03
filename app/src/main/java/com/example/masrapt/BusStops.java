@@ -46,7 +46,7 @@ public class BusStops extends Fragment {
     private String mParam2;
     private ArrayList<BusStop> all_buses_stops = new ArrayList<>();
     private RecyclerView recyclerView;
-    private ImageView image_iteration;
+    private ImageView image_iteration, waiting_image_iteration;
 
     public BusStops() {
         // Required empty public constructor
@@ -84,12 +84,23 @@ public class BusStops extends Fragment {
         super.onStart();
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.bus_stops_recycler_view);
         image_iteration = (ImageView) getActivity().findViewById(R.id.image_iteration);
+        waiting_image_iteration = (ImageView) getActivity().findViewById(R.id.waiting_image_iteration);
         setBusStopsAdapterInfo();
         getAllBusStops();
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        recyclerView = (RecyclerView) getActivity().findViewById(R.id.bus_stops_recycler_view);
+        image_iteration = (ImageView) getActivity().findViewById(R.id.image_iteration);
+        waiting_image_iteration = (ImageView) getActivity().findViewById(R.id.waiting_image_iteration);
+        setBusStopsAdapterInfo();
+        getAllBusStops();
     }
 
     private void setBusStopsAdapterInfo() {
+        waiting_image_iteration.setVisibility(View.INVISIBLE);
         BusStopsRecyclerAdapter route_adapter = new BusStopsRecyclerAdapter(all_buses_stops);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -114,11 +125,13 @@ public class BusStops extends Fragment {
                 BusStopJSONResponse jsonResponse = response.body();
                 all_buses_stops = new ArrayList<BusStop>(Arrays.asList(jsonResponse.getBusStop()));
                 setBusStopsAdapterInfo();
+                image_iteration.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onFailure(Call<BusStopJSONResponse> call, Throwable t) {
                 image_iteration.setVisibility(View.VISIBLE);
+                waiting_image_iteration.setVisibility(View.INVISIBLE);
                 Toast.makeText(getActivity(), "Error while updating bus info", Toast.LENGTH_SHORT).show();
             }
         });

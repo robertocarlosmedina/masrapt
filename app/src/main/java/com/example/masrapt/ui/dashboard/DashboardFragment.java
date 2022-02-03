@@ -40,7 +40,7 @@ public class DashboardFragment extends Fragment {
     private DashboardViewModel dashboardViewModel;
     private RecyclerView bus_recycler;
     private FragmentDashboardBinding binding;
-    private ImageView image_iteration;
+    private ImageView image_iteration, waiting_image_iteration;
     private View root;
     private ArrayList<Bus> busList;
     private ArrayList<BusDescription> busList_recycler;
@@ -55,6 +55,10 @@ public class DashboardFragment extends Fragment {
 
         busList_recycler = new ArrayList<>();
         busList = new ArrayList<>();
+
+        bus_recycler = (RecyclerView) getActivity().findViewById(R.id.recycler_view_1);
+        image_iteration = (ImageView) getActivity().findViewById(R.id.image_iteration);
+        waiting_image_iteration = (ImageView) getActivity().findViewById(R.id.waiting_image_iteration);
 
         return root;
     }
@@ -75,6 +79,17 @@ public class DashboardFragment extends Fragment {
         super.onStart();
         bus_recycler = (RecyclerView) getActivity().findViewById(R.id.recycler_view_1);
         image_iteration = (ImageView) getActivity().findViewById(R.id.image_iteration);
+        waiting_image_iteration = (ImageView) getActivity().findViewById(R.id.waiting_image_iteration);
+        setBusAdapter();
+        getAllBusInfo();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        bus_recycler = (RecyclerView) getActivity().findViewById(R.id.recycler_view_1);
+        image_iteration = (ImageView) getActivity().findViewById(R.id.image_iteration);
+        waiting_image_iteration = (ImageView) getActivity().findViewById(R.id.waiting_image_iteration);
         setBusAdapter();
         getAllBusInfo();
     }
@@ -105,12 +120,14 @@ public class DashboardFragment extends Fragment {
                             bus.getRoute_color()
                     ));
                 }
+                waiting_image_iteration.setVisibility(View.INVISIBLE);
                 setBusAdapter();
             }
 
             @Override
             public void onFailure(Call<BusJSONResponse> call, Throwable t) {
                 image_iteration.setVisibility(View.VISIBLE);
+                waiting_image_iteration.setVisibility(View.INVISIBLE);
                 Toast.makeText(getActivity(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
             }
         });

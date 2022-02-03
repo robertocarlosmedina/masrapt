@@ -39,7 +39,7 @@ public class NotificationsFragment extends Fragment {
     private FragmentNotificationsBinding binding;
     private ArrayList<Route> routesList;
     private ArrayList<RouteDescription> routesList_recycl;
-    private ImageView image_iteration;
+    private ImageView image_iteration, waiting_image_iteration;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -59,6 +59,7 @@ public class NotificationsFragment extends Fragment {
      * Method to set the routes Recycler view adapter
      * */
     private void setRouteAdapter(){
+        waiting_image_iteration.setVisibility(View.INVISIBLE);
         RoutesRecyclerAdapter route_adapter = new RoutesRecyclerAdapter(routesList_recycl);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -86,12 +87,15 @@ public class NotificationsFragment extends Fragment {
                             String.valueOf(route.getActive_bus())+ " active",
                             String.valueOf(route.getRoute_timer())+" mn"));
                 }
+                image_iteration.setVisibility(View.INVISIBLE);
+
                 setRouteAdapter();
             }
 
             @Override
             public void onFailure(Call<RouteJSONResponse> call, Throwable t) {
                 image_iteration.setVisibility(View.VISIBLE);
+                waiting_image_iteration.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -101,6 +105,16 @@ public class NotificationsFragment extends Fragment {
         super.onStart();
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_view);
         image_iteration = (ImageView) getActivity().findViewById(R.id.image_iteration);
+        waiting_image_iteration = (ImageView) getActivity().findViewById(R.id.waiting_image_iteration);
+        setRoutesInfo();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_view);
+        image_iteration = (ImageView) getActivity().findViewById(R.id.image_iteration);
+        waiting_image_iteration = (ImageView) getActivity().findViewById(R.id.waiting_image_iteration);
         setRoutesInfo();
     }
 

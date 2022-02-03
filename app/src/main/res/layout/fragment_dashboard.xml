@@ -60,11 +60,22 @@
 
     <ImageView
         android:id="@+id/image_iteration"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:visibility="invisible"
+        android:src="@drawable/no_connection_rafiki_2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/waiting_image_iteration"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:visibility="invisible"
-        android:src="@drawable/no_connection_bro_1"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="visible"
+        android:src="@drawable/man_in_bus_stop"
+        app:layout_constraintBottom_toBottomOf="@+id/nestedScrollView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
