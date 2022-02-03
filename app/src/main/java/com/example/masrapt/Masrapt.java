@@ -7,6 +7,7 @@ import android.os.Build;
 
 public class Masrapt extends Application {
     public  static final  String CHANNEL_1_ID = "channel1";
+    public  static final  String CHANNEL_2_ID = "channel2";
 
     @Override
     public void onCreate() {
@@ -17,12 +18,19 @@ public class Masrapt extends Application {
 
     private void createNotificationChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel = new NotificationChannel(
-                    CHANNEL_1_ID, "Buses Stops Notification",
+            NotificationChannel notificationChannel1 = new NotificationChannel(
+                    CHANNEL_1_ID, "Nearby Buses Alert",
                     NotificationManager.IMPORTANCE_HIGH);
-            notificationChannel.setDescription("Buses Stops proximity alerts");
+            notificationChannel1.setDescription("Buses Stops Proximity Alerts");
+
+            NotificationChannel notificationChannel2 = new NotificationChannel(
+                    CHANNEL_2_ID, "Bus stop alert",
+                    NotificationManager.IMPORTANCE_HIGH);
+            notificationChannel2.setDescription("Buses on Stops Alerts");
+
             NotificationManager manager = getSystemService(NotificationManager.class);
-            manager.createNotificationChannel(notificationChannel);
+            manager.createNotificationChannel(notificationChannel2);
+            manager.createNotificationChannel(notificationChannel1);
         }
     }
 }

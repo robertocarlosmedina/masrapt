@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -20,7 +21,6 @@ public class TelaLogin extends AppCompatActivity {
 
     private TextView signUp;
     private EditText name_or_email, password;
-    private TextView test;
     private AppCompatButton btn_login;
 
     @Override
@@ -28,7 +28,6 @@ public class TelaLogin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_login);
 
-        test = (TextView) findViewById(R.id.test);
         btn_login = (AppCompatButton) findViewById(R.id.btn_login);
         name_or_email = (EditText) findViewById(R.id.name_or_email);
         password = (EditText) findViewById(R.id.password);
@@ -56,7 +55,6 @@ public class TelaLogin extends AppCompatActivity {
         String user_password = this.password.getText().toString();
 
         if(!user_name_or_email.equals("") && !user_password.equals("")){
-            Toast.makeText(TelaLogin.this, "Authenticating user", Toast.LENGTH_SHORT).show();
 
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(getString(R.string.api_base_url))
@@ -67,64 +65,53 @@ public class TelaLogin extends AppCompatActivity {
 
             AuthUserModel authUserModel =  new AuthUserModel(user_name_or_email, user_password);
 
-            Call<AuthUserModel> call = authUserOnAPI.PostDataIntoServer(authUserModel);
+            Call<AuthUserModel> call = authUserOnAPI.authenticateUser(authUserModel);
 
             call.enqueue(new Callback<AuthUserModel>() {
                 @Override
                 public void onResponse(Call<AuthUserModel> call, Response<AuthUserModel> response) {
                     if (response.code() == 401){
-                        Toast.makeText(TelaLogin.this, "User authentication fail", Toast.LENGTH_SHORT).show();
-                    }
-                    if (response.code() != 200){
-                        test.setText("Check your internet connection");
+                        Toast.makeText(TelaLogin.this, "User authentication fail",
+                                Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    String res = "name_or_email: " + user_name_or_email +
-                            "\n user_password: " + user_password;
-                    test.setText(res);
+                    else if (response.code() != 200){
+                        Toast.makeText(TelaLogin.this, "Check your internet connection",
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    saveLoggingDataOnSharePreferences(response.body().getId(), response.body().getName(),
+                            response.body().getEmail());
+                    Toast.makeText(TelaLogin.this, "User successfully logged", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onFailure(Call<AuthUserModel> call, Throwable t) {
-                    test.setText(t.getMessage());
+                    Toast.makeText(TelaLogin.this, "Your Authentication fail", Toast.LENGTH_SHORT).show();
                 }
             });
             return;
         }
-        Toast.makeText(TelaLogin.this, "The fields should not be empty", Toast.LENGTH_SHORT).show();
+        Toast.makeText(TelaLogin.this, "The fields should not be empty",
+                Toast.LENGTH_SHORT).show();
     }
 
-    private void getAPIData() {
-        Toast.makeText(TelaLogin.this, "Getting data", Toast.LENGTH_SHORT).show();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(getString(R.string.api_base_url))
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        masraptAPI masrapt_api = retrofit.create(masraptAPI.class);
-        Call<userDataModel> call = masrapt_api.getData();
-
-        test.setText("okok");
-
-        call.enqueue(new Callback<userDataModel>() {
-            @Override
-            public void onResponse(Call<userDataModel> call, Response<userDataModel> response) {
-                if (response.code() != 200){
-                    test.setText("Check your internet connection");
-                    return;
-                }
-
-                String res = "ID: " + response.body().getId() +
-                        "\n user: " + response.body().getName()+
-                        "\n email: " + response.body().getEmail()+
-                        "\n password: " + response.body().getPassword();
-                test.setText(res);
-            }
-
-            @Override
-            public void onFailure(Call<userDataModel> call, Throwable t) {
-                test.setText(t.getMessage());
-            }
-        });
+    private void saveLoggingDataOnSharePreferences(int user_id, String username, String email) {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(
+                "application", this.MODE_PRIVATE
+        );
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("user_id", user_id);
+        editor.putString("username", username);
+        editor.putString("user_email", email);
+        editor.apply();
+        openDashboardActivity();
     }
+
+    private void openDashboardActivity() {
+        Intent intent = new Intent(TelaLogin.this, Dashboard_activity.class);
+        startActivity(intent);
+    }
+
 }

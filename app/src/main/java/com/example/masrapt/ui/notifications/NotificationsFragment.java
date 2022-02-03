@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,6 +39,7 @@ public class NotificationsFragment extends Fragment {
     private FragmentNotificationsBinding binding;
     private ArrayList<Route> routesList;
     private ArrayList<RouteDescription> routesList_recycl;
+    private ImageView image_iteration;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -89,7 +91,7 @@ public class NotificationsFragment extends Fragment {
 
             @Override
             public void onFailure(Call<RouteJSONResponse> call, Throwable t) {
-
+                image_iteration.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -98,6 +100,7 @@ public class NotificationsFragment extends Fragment {
     public void onStart() {
         super.onStart();
         recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_view);
+        image_iteration = (ImageView) getActivity().findViewById(R.id.image_iteration);
         setRoutesInfo();
     }
 

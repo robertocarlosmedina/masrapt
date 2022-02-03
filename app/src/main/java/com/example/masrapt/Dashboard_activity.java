@@ -1,7 +1,9 @@
 package com.example.masrapt;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -49,6 +51,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Dashboard_activity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private ActivityDashboardBinding binding;
+    private String username, user_email;
+    private int user_id;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
@@ -100,6 +104,7 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
         navigationView = (NavigationView) findViewById(R.id.drawer_nav_view);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
+
         setSupportActionBar(toolbar);
 
         navigationView.bringToFront();
@@ -113,8 +118,17 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
         unLoggedDialog = new Dialog(Dashboard_activity.this);
         unLoggedDialog.setContentView(R.layout.user_unlogged_dialog);
         unLoggedDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialog_bg));
-        unLoggedDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        unLoggedDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
         unLoggedDialog.setCancelable(true);
+
+        close_icon = (ImageView) unLoggedDialog.findViewById(R.id.close_icon);
+        close_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                close_dialog();
+            }
+        });
 
         login = (TextView) unLoggedDialog.findViewById(R.id.login);
         login.setOnClickListener(new View.OnClickListener() {
@@ -125,12 +139,24 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
             }
         });
 
+        getSharePreferencesData();
+        displayingUserDataOnDialog();
+    }
+
+    private void displayingUserDataOnDialog() {
+        TextView username, user_mail;
         // Dialog box to the logged user
         loggedDialog = new Dialog(Dashboard_activity.this);
         loggedDialog.setContentView(R.layout.user_logged_dialog);
         loggedDialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialog_bg));
         loggedDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         loggedDialog.setCancelable(true);
+
+        username = (TextView) loggedDialog.findViewById(R.id.user_name);
+        user_mail = (TextView) loggedDialog.findViewById(R.id.user_mail);
+
+        username.setText(this.username);
+        user_mail.setText(this.user_email);
 
         close_icon = (ImageView) loggedDialog.findViewById(R.id.close_icon);
         close_icon.setOnClickListener(new View.OnClickListener() {
@@ -141,8 +167,22 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
         });
     }
 
+    private void getSharePreferencesData() {
+        SharedPreferences sharedPreferences = this.getSharedPreferences("application",
+                Context.MODE_PRIVATE);
+        user_id = sharedPreferences.getInt("user_id", -1);
+        username = sharedPreferences.getString("username", "");
+        user_email = sharedPreferences.getString("user_email", "");
+
+    }
+
     public void openLoginInfo(){
-        unLoggedDialog.show();
+        if(user_id == -1){
+            unLoggedDialog.show();
+        }
+        else{
+            loggedDialog.show();
+        }
     }
 
     public void close_dialog(){
@@ -171,8 +211,29 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
                 Intent intent_1 = new Intent(Dashboard_activity.this, Settings.class);
                 startActivity(intent_1);
                 break;
+            case R.id.log_out:
+                handlingUserLogOut();
+                break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void handlingUserLogOut() {
+        if(user_id == -1){
+            Toast.makeText(Dashboard_activity.this, "There is no logged user",
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+        SharedPreferences sharedPreferences = this.getSharedPreferences(
+                "application", this.MODE_PRIVATE
+        );
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("user_id").commit();
+        editor.remove("username").commit();
+        editor.remove("user_email").commit();
+        editor.apply();
+        Intent intent_1 = new Intent(Dashboard_activity.this, Dashboard_activity.class);
+        startActivity(intent_1);
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,7 @@ public class DashboardFragment extends Fragment {
     private DashboardViewModel dashboardViewModel;
     private RecyclerView bus_recycler;
     private FragmentDashboardBinding binding;
+    private ImageView image_iteration;
     private View root;
     private ArrayList<Bus> busList;
     private ArrayList<BusDescription> busList_recycler;
@@ -72,6 +74,7 @@ public class DashboardFragment extends Fragment {
     public void onStart() {
         super.onStart();
         bus_recycler = (RecyclerView) getActivity().findViewById(R.id.recycler_view_1);
+        image_iteration = (ImageView) getActivity().findViewById(R.id.image_iteration);
         setBusAdapter();
         getAllBusInfo();
     }
@@ -107,6 +110,7 @@ public class DashboardFragment extends Fragment {
 
             @Override
             public void onFailure(Call<BusJSONResponse> call, Throwable t) {
+                image_iteration.setVisibility(View.VISIBLE);
                 Toast.makeText(getActivity(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
             }
         });

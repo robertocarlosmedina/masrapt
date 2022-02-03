@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +17,22 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class Settings extends AppCompatActivity {
 
     private ImageView icon_back;
-    private TextView change_password, delete_account, change_themes, cancel_txt;
+    private TextView change_password, delete_account, change_themes, cancel_txt, selected_theme;
     private Dialog theme_selector, delete_account_dialog;
     private Button yes_button, no_button;
     private RadioGroup themes_radio_group;
+    private int user_id;
+    private String username, user_email, app_theme;
+    private SharedPreferences.Editor editor;
 
 
     @Override
@@ -29,11 +40,18 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        SharedPreferences sharedPreferences = this.getSharedPreferences(
+                "application", this.MODE_PRIVATE
+        );
+        editor = sharedPreferences.edit();
+
+        selected_theme = (TextView) findViewById(R.id.selected_theme);
+
         icon_back = (ImageView) findViewById(R.id.back_icon);
         icon_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openLoginInfo();
+                startDashboardIntent();
             }
         });
 
@@ -59,15 +77,25 @@ public class Settings extends AppCompatActivity {
                 switch (checkedId){
                     case R.id.light_theme:
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        Toast.makeText(Settings.this, "Light themes enabled", Toast.LENGTH_SHORT).show();
+                        editor.putString("appTheme", "Night Theme");
+                        editor.apply();
+                        Toast.makeText(Settings.this, "Light themes enabled",
+                                Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.dark_theme:
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        Toast.makeText(Settings.this, "Dark themes enabled", Toast.LENGTH_SHORT).show();
+                        editor.putString("appTheme", "Dark Theme");
+                        editor.apply();
+                        Toast.makeText(Settings.this, "Dark themes enabled",
+                                Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.system_theme:
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                        Toast.makeText(Settings.this, "System default themes enabled", Toast.LENGTH_SHORT).show();
+                        editor.putString("appTheme", "Default System");
+                        editor.apply();
+                        selected_theme.setText("Default System");
+                        Toast.makeText(Settings.this, "System default themes enabled",
+                                Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
@@ -109,7 +137,13 @@ public class Settings extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 delete_account_dialog.hide();
-                delete_user_account();
+                if(user_id == -1){
+                    Toast.makeText(Settings.this, "There is no logged user",
+                            Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    delete_user_account();
+                }
             }
         });
 
@@ -120,13 +154,69 @@ public class Settings extends AppCompatActivity {
                 delete_account_dialog.hide();
             }
         });
+
+        getUserInfo();
+        setThemeNameAccordingSharedPreferences();
+    }
+
+    private void setThemeNameAccordingSharedPreferences() {
+        selected_theme.setText(app_theme);
+    }
+
+
+    private void getUserInfo() {
+        SharedPreferences sharedPreferences = this.getSharedPreferences("application",
+                Context.MODE_PRIVATE);
+        user_id = sharedPreferences.getInt("user_id", -1);
+        username = sharedPreferences.getString("username", "");
+        user_email = sharedPreferences.getString("user_email", "");
+        app_theme = sharedPreferences.getString("appTheme", "");
     }
 
     public void delete_user_account(){
-        Toast.makeText(Settings.this, "Your Account Successfully deleted", Toast.LENGTH_SHORT).show();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.api_base_url))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        AuthUserOnAPI authUserOnAPI = retrofit.create(AuthUserOnAPI.class);
+
+        AuthUserModel authUserModel =  new AuthUserModel(user_id);
+
+        Call<AuthUserModel> call = authUserOnAPI.deleteUserData(authUserModel);
+
+        call.enqueue(new Callback<AuthUserModel>() {
+            @Override
+            public void onResponse(Call<AuthUserModel> call, Response<AuthUserModel> response) {
+                Toast.makeText(Settings.this, "Account Successfully deleted",
+                        Toast.LENGTH_SHORT).show();
+                clearSharedPreferences();
+            }
+
+            @Override
+            public void onFailure(Call<AuthUserModel> call, Throwable t) {
+                Toast.makeText(Settings.this, "Account Successfully deleted",
+                        Toast.LENGTH_SHORT).show();
+                clearSharedPreferences();
+            }
+        });
     }
-    public void openLoginInfo(){
-        Intent intent = new Intent(Settings.this, MainActivity.class);
+
+    private void startDashboardIntent() {
+        Intent intent = new Intent(Settings.this, Dashboard_activity.class);
         startActivity(intent);
+    }
+
+    private void clearSharedPreferences() {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(
+                "application", this.MODE_PRIVATE
+        );
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("user_id").commit();
+        editor.remove("username").commit();
+        editor.remove("user_email").commit();
+        editor.apply();
+
+        startDashboardIntent();
     }
 }
