@@ -1,5 +1,8 @@
 package com.example.masrapt.ui.dashboard;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -44,6 +47,7 @@ public class DashboardFragment extends Fragment {
     private View root;
     private ArrayList<Bus> busList;
     private ArrayList<BusDescription> busList_recycler;
+    private boolean data_already_get = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -63,6 +67,16 @@ public class DashboardFragment extends Fragment {
         return root;
     }
 
+    public boolean checkInternetConnection(){
+        ConnectivityManager connectivityManager = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Method to set the bus Recycler view adapter
      * */
@@ -77,21 +91,41 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        bus_recycler = (RecyclerView) getActivity().findViewById(R.id.recycler_view_1);
-        image_iteration = (ImageView) getActivity().findViewById(R.id.image_iteration);
-        waiting_image_iteration = (ImageView) getActivity().findViewById(R.id.waiting_image_iteration);
-        setBusAdapter();
-        getAllBusInfo();
+        if(!data_already_get){
+            bus_recycler = (RecyclerView) getActivity().findViewById(R.id.recycler_view_1);
+            image_iteration = (ImageView) getActivity().findViewById(R.id.image_iteration);
+            waiting_image_iteration = (ImageView) getActivity().findViewById(R.id.waiting_image_iteration);
+            setBusAdapter();
+            if (checkInternetConnection()){
+                getAllBusInfo();
+                data_already_get = true;
+            }
+            else{
+                image_iteration.setVisibility(View.VISIBLE);
+                Toast.makeText(getActivity(), "Please check your internet connection",
+                        Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        bus_recycler = (RecyclerView) getActivity().findViewById(R.id.recycler_view_1);
-        image_iteration = (ImageView) getActivity().findViewById(R.id.image_iteration);
-        waiting_image_iteration = (ImageView) getActivity().findViewById(R.id.waiting_image_iteration);
-        setBusAdapter();
-        getAllBusInfo();
+        if(!data_already_get){
+            bus_recycler = (RecyclerView) getActivity().findViewById(R.id.recycler_view_1);
+            image_iteration = (ImageView) getActivity().findViewById(R.id.image_iteration);
+            waiting_image_iteration = (ImageView) getActivity().findViewById(R.id.waiting_image_iteration);
+            setBusAdapter();
+            if (checkInternetConnection()){
+                getAllBusInfo();
+                data_already_get = true;
+            }
+            else{
+                image_iteration.setVisibility(View.VISIBLE);
+                Toast.makeText(getActivity(), "Please check your internet connection",
+                        Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     /**
@@ -120,15 +154,14 @@ public class DashboardFragment extends Fragment {
                             bus.getRoute_color()
                     ));
                 }
-                waiting_image_iteration.setVisibility(View.INVISIBLE);
                 setBusAdapter();
             }
 
             @Override
             public void onFailure(Call<BusJSONResponse> call, Throwable t) {
-                image_iteration.setVisibility(View.VISIBLE);
-                waiting_image_iteration.setVisibility(View.INVISIBLE);
-                Toast.makeText(getActivity(), "Please check your internet connection", Toast.LENGTH_SHORT).show();
+                waiting_image_iteration.setVisibility(View.VISIBLE);
+                Toast.makeText(getActivity(), "Server not responding",
+                        Toast.LENGTH_LONG).show();
             }
         });
     }

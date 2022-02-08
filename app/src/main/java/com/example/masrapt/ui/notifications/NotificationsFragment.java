@@ -1,11 +1,15 @@
 package com.example.masrapt.ui.notifications;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,6 +44,7 @@ public class NotificationsFragment extends Fragment {
     private ArrayList<Route> routesList;
     private ArrayList<RouteDescription> routesList_recycl;
     private ImageView image_iteration, waiting_image_iteration;
+    private boolean data_already_get = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -67,6 +72,16 @@ public class NotificationsFragment extends Fragment {
         recyclerView.setAdapter(route_adapter);
     }
 
+    public boolean checkInternetConnection(){
+        ConnectivityManager connectivityManager = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Method that connect to the API and get all the routes info
      * */
@@ -87,15 +102,14 @@ public class NotificationsFragment extends Fragment {
                             String.valueOf(route.getActive_bus())+ " active",
                             String.valueOf(route.getRoute_timer())+" mn"));
                 }
-                image_iteration.setVisibility(View.INVISIBLE);
-
                 setRouteAdapter();
             }
 
             @Override
             public void onFailure(Call<RouteJSONResponse> call, Throwable t) {
-                image_iteration.setVisibility(View.VISIBLE);
-                waiting_image_iteration.setVisibility(View.INVISIBLE);
+                waiting_image_iteration.setVisibility(View.VISIBLE);
+                Toast.makeText(getActivity(), "Server not responding",
+                        Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -103,19 +117,41 @@ public class NotificationsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_view);
-        image_iteration = (ImageView) getActivity().findViewById(R.id.image_iteration);
-        waiting_image_iteration = (ImageView) getActivity().findViewById(R.id.waiting_image_iteration);
-        setRoutesInfo();
+        if(!data_already_get){
+            recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_view);
+            image_iteration = (ImageView) getActivity().findViewById(R.id.image_iteration);
+            waiting_image_iteration = (ImageView) getActivity().findViewById(R.id.waiting_image_iteration);
+            setRouteAdapter();
+            if (checkInternetConnection()){
+                setRoutesInfo();
+                data_already_get = true;
+            }
+            else{
+                image_iteration.setVisibility(View.VISIBLE);
+                Toast.makeText(getActivity(), "Please check your internet connection",
+                        Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_view);
-        image_iteration = (ImageView) getActivity().findViewById(R.id.image_iteration);
-        waiting_image_iteration = (ImageView) getActivity().findViewById(R.id.waiting_image_iteration);
-        setRoutesInfo();
+        if(!data_already_get){
+            recyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_view);
+            image_iteration = (ImageView) getActivity().findViewById(R.id.image_iteration);
+            waiting_image_iteration = (ImageView) getActivity().findViewById(R.id.waiting_image_iteration);
+            setRouteAdapter();
+            if (checkInternetConnection()){
+                setRoutesInfo();
+                data_already_get = true;
+            }
+            else{
+                image_iteration.setVisibility(View.VISIBLE);
+                Toast.makeText(getActivity(), "Please check your internet connection",
+                        Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     @Override

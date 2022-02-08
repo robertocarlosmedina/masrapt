@@ -411,13 +411,14 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         ArrayList<BitmapDescriptor> bitmapDescriptors = new ArrayList<>();
 
         for (Bus bus: busList){
-            switch (bus.getRoute_color()){
-                case "blue":
-                    bitmapDescriptors.add(bitmapDescriptorFromVector(R.drawable.ic_baseline_location_blue_on_24));
-                case "red":
-                    bitmapDescriptors.add(bitmapDescriptorFromVector(R.drawable.ic_baseline_location_red_on_24));
-                case "green":
-                    bitmapDescriptors.add(bitmapDescriptorFromVector(R.drawable.ic_baseline_location_green_on_24));
+            if(bus.getRoute_color().equals("blue")){
+                bitmapDescriptors.add(bitmapDescriptorFromVector(R.drawable.ic_baseline_location_blue_on_24));
+            }
+            else if(bus.getRoute_color().equals("red")){
+                bitmapDescriptors.add(bitmapDescriptorFromVector(R.drawable.ic_baseline_location_red_on_24));
+            }
+            else if(bus.getRoute_color().equals("green")){
+                bitmapDescriptors.add(bitmapDescriptorFromVector(R.drawable.ic_baseline_location_green_on_24));
             }
         }
 

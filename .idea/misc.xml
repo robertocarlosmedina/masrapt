@@ -34,6 +34,7 @@
         <entry key="app/src/main/res/drawable/btn_whats_discord.xml" value="0.10520833333333333" />
         <entry key="app/src/main/res/drawable/buttom.xml" value="0.209375" />
         <entry key="app/src/main/res/drawable/buttom_min.xml" value="0.135" />
+        <entry key="app/src/main/res/drawable/color_cursor.xml" value="0.104" />
         <entry key="app/src/main/res/drawable/container_componentes_menu.xml" value="0.134375" />
         <entry key="app/src/main/res/drawable/container_componetes.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/dialog_bg.xml" value="0.209375" />
@@ -75,11 +76,11 @@
         <entry key="app/src/main/res/layout/fragment_bus_stops.xml" value="0.11043566362715299" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.11043566362715299" />
+        <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.17" />
         <entry key="app/src/main/res/layout/header.xml" value="0.22" />
         <entry key="app/src/main/res/layout/route_des_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/select_route_dialog.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/themes_selectors.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/themes_selectors.xml" value="0.5" />
         <entry key="app/src/main/res/layout/user_logged_dialog.xml" value="0.33" />
         <entry key="app/src/main/res/layout/user_unlog_dialog.xml" value="0.14628623188405798" />
         <entry key="app/src/main/res/layout/user_unlogged_dialog.xml" value="0.33" />

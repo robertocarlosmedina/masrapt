@@ -79,6 +79,7 @@ public class Settings extends AppCompatActivity {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                         editor.putString("appTheme", "Night Theme");
                         editor.apply();
+                        selected_theme.setText("Night Theme");
                         Toast.makeText(Settings.this, "Light themes enabled",
                                 Toast.LENGTH_SHORT).show();
                         break;
@@ -86,6 +87,7 @@ public class Settings extends AppCompatActivity {
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                         editor.putString("appTheme", "Dark Theme");
                         editor.apply();
+                        selected_theme.setText("Dark Theme");
                         Toast.makeText(Settings.this, "Dark themes enabled",
                                 Toast.LENGTH_SHORT).show();
                         break;

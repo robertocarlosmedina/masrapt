@@ -23,6 +23,7 @@
             android:hint="Password"
             android:inputType="textPassword"
             android:maxLength="25"
+            android:textCursorDrawable="@drawable/color_cursor"
             android:paddingLeft="80dp"
             android:textSize="16dp"
             android:textColorHint="@color/hint_color"
@@ -75,6 +76,7 @@
             android:drawableLeft="@drawable/ic_user"
             android:hint="Username or email"
             android:inputType="textPersonName"
+            android:textCursorDrawable="@drawable/color_cursor"
             android:maxLength="25"
             android:textSize="16dp"
             android:textColorHint="@color/hint_color"
@@ -83,24 +85,6 @@
             app:layout_constraintStart_toStartOf="@id/container_componentes"
             app:layout_constraintTop_toTopOf="@id/container_componentes" />
 
-        <!--
-        <TextView
-            android:id="@+id/F_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_between_input_box"
-            android:text="@string/password"
-            android:textColor="@color/blue"
-            android:textSize="14dp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/signUp"
-            app:layout_constraintVertical_bias="0.0" />
-
-        -->
 
         <TextView
             android:id="@+id/not_account"

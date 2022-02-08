@@ -1,6 +1,9 @@
 package com.example.masrapt;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -47,6 +50,7 @@ public class BusStops extends Fragment {
     private ArrayList<BusStop> all_buses_stops = new ArrayList<>();
     private RecyclerView recyclerView;
     private ImageView image_iteration, waiting_image_iteration;
+    private boolean data_already_get = false;
 
     public BusStops() {
         // Required empty public constructor
@@ -79,28 +83,60 @@ public class BusStops extends Fragment {
         }
     }
 
+    public boolean checkInternetConnection(){
+        ConnectivityManager connectivityManager = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            //we are connected to a network
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void onStart() {
         super.onStart();
-        recyclerView = (RecyclerView) getActivity().findViewById(R.id.bus_stops_recycler_view);
-        image_iteration = (ImageView) getActivity().findViewById(R.id.image_iteration);
-        waiting_image_iteration = (ImageView) getActivity().findViewById(R.id.waiting_image_iteration);
-        setBusStopsAdapterInfo();
-        getAllBusStops();
+        if(!data_already_get){
+            recyclerView = (RecyclerView) getActivity().findViewById(R.id.bus_stops_recycler_view);
+            image_iteration = (ImageView) getActivity().findViewById(R.id.image_iteration);
+            waiting_image_iteration = (ImageView) getActivity().findViewById(R.id.waiting_image_iteration);
+            setBusStopsAdapterInfo();
+            if (checkInternetConnection()){
+                getAllBusStops();
+                data_already_get = true;
+            }
+            else{
+                image_iteration.setVisibility(View.VISIBLE);
+                Toast.makeText(getActivity(), "Please check your internet connection",
+                        Toast.LENGTH_LONG).show();
+            }
+        }
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        recyclerView = (RecyclerView) getActivity().findViewById(R.id.bus_stops_recycler_view);
-        image_iteration = (ImageView) getActivity().findViewById(R.id.image_iteration);
-        waiting_image_iteration = (ImageView) getActivity().findViewById(R.id.waiting_image_iteration);
-        setBusStopsAdapterInfo();
-        getAllBusStops();
+        if(!data_already_get){
+            recyclerView = (RecyclerView) getActivity().findViewById(R.id.bus_stops_recycler_view);
+            image_iteration = (ImageView) getActivity().findViewById(R.id.image_iteration);
+            waiting_image_iteration = (ImageView) getActivity().findViewById(R.id.waiting_image_iteration);
+            setBusStopsAdapterInfo();
+            if (checkInternetConnection()){
+                getAllBusStops();
+                data_already_get = true;
+            }
+            else{
+                image_iteration.setVisibility(View.VISIBLE);
+                Toast.makeText(getActivity(), "Please check your internet connection",
+                        Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     private void setBusStopsAdapterInfo() {
         waiting_image_iteration.setVisibility(View.INVISIBLE);
+
         BusStopsRecyclerAdapter route_adapter = new BusStopsRecyclerAdapter(all_buses_stops);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -125,14 +161,13 @@ public class BusStops extends Fragment {
                 BusStopJSONResponse jsonResponse = response.body();
                 all_buses_stops = new ArrayList<BusStop>(Arrays.asList(jsonResponse.getBusStop()));
                 setBusStopsAdapterInfo();
-                image_iteration.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onFailure(Call<BusStopJSONResponse> call, Throwable t) {
-                image_iteration.setVisibility(View.VISIBLE);
-                waiting_image_iteration.setVisibility(View.INVISIBLE);
-                Toast.makeText(getActivity(), "Error while updating bus info", Toast.LENGTH_SHORT).show();
+                waiting_image_iteration.setVisibility(View.VISIBLE);
+                Toast.makeText(getActivity(), "Server not responding",
+                        Toast.LENGTH_LONG).show();
             }
         });
     }
