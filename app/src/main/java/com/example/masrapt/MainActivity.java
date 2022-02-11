@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
               startActivity(intent);
               finish();
           }
-        }, 0);
+        }, 1000);
     }
 
     private void checkThemeOnSharedPreferences() {
@@ -45,9 +45,13 @@ public class MainActivity extends AppCompatActivity {
 
         if(app_theme.equals("Dark Theme")){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            editor.putString("appTheme", "Dark Theme");
+            editor.apply();
         }
         else if(app_theme.equals("Night Theme")){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            editor.putString("appTheme", "Night Theme");
+            editor.apply();
         }
         else{
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);

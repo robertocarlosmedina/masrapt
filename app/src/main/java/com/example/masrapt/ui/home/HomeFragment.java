@@ -2,6 +2,7 @@ package com.example.masrapt.ui.home;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -61,6 +62,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
     private View homeViewModel;
     private GoogleMap gMap;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
     private TextView coordinates, map_type, floating_selector;
     private ImageView my_location_icon;
     private Dialog route_selector_dialog;
@@ -76,6 +79,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private ArrayList<BusStop> all_buses_stops = new ArrayList<>();
     private LatLng my_location;
     private Boolean showLocation = false;
+    private String current_map_type;
 
     /**
      * Class Runnable that will execute some Bus
@@ -126,20 +130,41 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
      * Method that handle the map type changing
      * */
     private void changeMapType() {
+        sharedPreferences = getActivity().getSharedPreferences(
+                "application", getActivity().MODE_PRIVATE
+        );
+        editor = sharedPreferences.edit();
         String current_type = map_type.getText().toString();
-        if (current_type.equals("Satellite")) {
+        if(current_type.equals("Satellite")) {
             gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
             map_type.setText("Normal");
+
         } else {
             gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
             map_type.setText("Satellite");
         }
+        editor.putString("map_type", current_type);
+        editor.apply();
+    }
+
+    private void setMapType(){
+        if(current_map_type.equals("Normal")){
+            gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        }
+        else{
+            gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        }
+        map_type.setText(current_map_type);
     }
 
     @Override
     public void onStart() {
-        coordinates = (TextView) getActivity().findViewById(R.id.test_display);
         super.onStart();
+        startingFragmentInfo();
+    }
+
+    public void startingFragmentInfo(){
+        coordinates = (TextView) getActivity().findViewById(R.id.test_display);
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             // getCurrentLocation();
@@ -186,8 +211,27 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 changeMapType();
             }
         });
+
+        Bundle extras = getActivity().getIntent().getExtras();
+        if (extras != null) {
+            String route_name = extras.getString("route_name");
+            floating_selector.setText(route_name);
+        }
         getAllBusInfo();
         getAllBusStops();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        startingFragmentInfo();
+    }
+
+    private void checkMapModeOnSharedPreferences(){
+        sharedPreferences = getActivity().getSharedPreferences(
+                "application", getActivity().MODE_PRIVATE
+        );
+        current_map_type = sharedPreferences.getString("map_type", "Normal");
     }
 
     /**
@@ -354,6 +398,10 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mindelo, 15));
 
         drawRoutesPolygon();
+
+        checkMapModeOnSharedPreferences();
+
+        setMapType();
     }
 
     /**

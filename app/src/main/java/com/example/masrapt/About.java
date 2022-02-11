@@ -28,7 +28,7 @@ public class About extends AppCompatActivity {
         icon_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openLoginInfo();
+                openDashboard();
             }
         });
 
@@ -106,8 +106,8 @@ public class About extends AppCompatActivity {
         });
 
     }
-    public void openLoginInfo(){
-        Intent intent = new Intent(About.this, MainActivity.class);
+    public void openDashboard(){
+        Intent intent = new Intent(About.this, Dashboard_activity.class);
         startActivity(intent);
     }
 

@@ -82,7 +82,8 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_dashboard);
+        NavController navController = Navigation.findNavController(this,
+                R.id.nav_host_fragment_activity_dashboard);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
         icon_user = (ImageView) findViewById(R.id.user_icon);
@@ -108,7 +109,9 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
         setSupportActionBar(toolbar);
 
         navigationView.bringToFront();
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,
+                toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -173,7 +176,6 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
         user_id = sharedPreferences.getInt("user_id", -1);
         username = sharedPreferences.getString("username", "");
         user_email = sharedPreferences.getString("user_email", "");
-
     }
 
     public void openLoginInfo(){
@@ -212,6 +214,8 @@ public class Dashboard_activity extends AppCompatActivity implements NavigationV
                 startActivity(intent_1);
                 break;
             case R.id.log_out:
+                Toast.makeText(this, "User logged out successfully",
+                        Toast.LENGTH_LONG).show();
                 handlingUserLogOut();
                 break;
         }

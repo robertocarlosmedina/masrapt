@@ -61,7 +61,8 @@ public class BroadcastService extends Service {
     }
 
     private void sendBusProximityNotification(String registration_plate) {
-        Intent dashboard_activity = new Intent(this, Dashboard_activity.class);
+        Intent dashboard_activity = new Intent(this, HomeFragment.class);
+        dashboard_activity.putExtra("route_name", routes_name);
         dashboard_activity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
                 0, dashboard_activity, 0);

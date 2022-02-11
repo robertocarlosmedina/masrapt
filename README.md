@@ -12,8 +12,8 @@ You have cloned this repos.
 Then you have to open it with Android Studio.
 
 ##### - Second
-Make sure that the API is running.
-Check the instruction and the API on [Masrapt API](https://github.com/robertocarlosmedina/masrapt-api)
+Make sure the API is running.
+Check the API and its instruction on [Masrapt API](https://github.com/robertocarlosmedina/masrapt-api)
 If you want to run the APP on your mobile, you need to run the API on an [Apache Server](https://ubuntu.com/tutorials/install-and-configure-apache#1-overview)  or using a [XAMPP Server](https://www.apachefriends.org/es/index.html)
 
 ##### - Third
